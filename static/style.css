@@ -1,0 +1,43 @@
+.filter-box .bd {
+    padding: 12px 26px 12px;
+    background: #fff;
+    font-size: 12px;
+    position: relative;
+}
+
+
+/* tag */
+.dl-lst dd a {
+    padding: 5px 7px 15px;
+    height: 27px;
+    line-height: 27px;
+    color: #333;
+    font-size: 12px;
+}
+
+.dl-lst dd a.on {
+    font-weight: 700;
+}
+
+
+
+
+.sub-option-list {
+    margin: 0px 0px 5px;
+    padding: 6px 12px;
+    background-color: #fbfbfb;
+    border: 1px solid #ddd;
+    line-height: 20px;
+    float: left;
+    clear: both;
+    border-radius: 3px;
+}
+
+.dl-lst dt {
+    float: left;
+    line-height: 27px;
+    font-size: 14px;
+    margin-right: 6px;
+    font-weight: 700;
+}
+
