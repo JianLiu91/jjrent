@@ -8,16 +8,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="RyanRent">
 	
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="static/bootstrap.min.css">
 
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> 
+	<script src="static/jquery-3.1.1.min.js"></script>
+	<script src="static/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="static/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> 
 
 	<!-- boostrap table -->
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+	<link rel="stylesheet" href="static/bootstrap-table.min.css">
+	<script src="static/bootstrap-table.min.js"></script>
+	<script src="static/bootstrap-table-zh-CN.min.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="static/style.css">
 
@@ -64,25 +64,122 @@
 
 		<!--	<nav class="border-top-0"> -->
 			  <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
-				    <a class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
-				    <a class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
+				    <a class="nav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
+				    <a class="nav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
 
 			  </div>
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		$(function(){
-		    $(".option-list a").click(function(e) {
-		        $(".option-list a").removeClass('on');
-		        $(e.target).addClass('on'); 
-		        $('#line-sub-list').show()
-		    });
 
-		    $(".nav-item").click(function(e) {
+		/* get options in the page */
+		function ttc(){
+			method = $('.nav-item.active.method').text();
+			area = $(".area.option-list a.on").text();
+			subway = $(".subway.option-list a.on").text();
+			suboption = $('#line-sub-list a.on').text()
+			zffs = $(".zffs.option-list a.on").text();
+
+			result = {
+				'method': method,
+				'area': area,
+				'subway': subway,
+				'suboption': suboption,
+				'zffs': zffs
+			}
+			
+			return result;
+		}
+
+		function add_sublist_click_function(){
+		    $("#line-sub-list a").click(function(e) {
+		        $("#line-sub-list a").removeClass('on');
+		        $(e.target).addClass('on');
+		        console.log(ttc())
+		    });
+		}
+
+
+		function get_sub_options(type_p, value) {
+			$.ajax({
+				url: '/get_sub_options',
+				type: 'get',
+			    data: {
+			        	'type': type_p,
+			        	'value': value
+			          },
+				dataType: 'json',
+				success: function(data) {
+			        var bodyFa = document.getElementById("line-sub-list");
+			        bodyFa.innerHTML = ""
+			        var a = document.createElement("a");
+			        a.innerText = '不限'
+			        a.classList.add('on')
+			        a.classList.add('suball')
+			        a.href = '#'
+			        bodyFa.appendChild(a);
+
+			        //<a class="allsub on" href="#" id="0">不限</a>
+
+			        for (var i = data['data'].length - 1; i >= 0; i--) {
+			        	var a=document.createElement("a");
+			        	a.innerText = data['data'][i];
+				        a.href = '#';
+				        bodyFa.appendChild(a);
+			        }
+			        add_sublist_click_function()
+				}
+			})
+		}
+
+
+
+		$(function(){
+			$(".nav-item").click(function(e) {
 		        $(".option-list a").removeClass('on'); 
 		        $('.all').addClass('on');
+		        $("#line-sub-list a").removeClass('on');
+		        $('.allsub').addClass('on');
 		        $('#line-sub-list').hide()
+
+				result = ttc()
+				result['method'] = e.target.innerHTML;
+				console.log(result)
+		    });
+
+
+		    $(".area.option-list a").click(function(e) {
+		        $(".area.option-list a").removeClass('on');
+		        $(e.target).addClass('on'); 
+		        $("#line-sub-list a").removeClass('on');
+		        $('#line-sub-list').show();
+		        $('.allsub').addClass('on');
+
+		        get_sub_options('area', e.target.innerHTML)
+		        console.log(ttc())
+		    });
+
+		    $(".subway.option-list a").click(function(e) {
+		        $(".subway.option-list a").removeClass('on');
+		        $(e.target).addClass('on'); 
+		        $("#line-sub-list a").removeClass('on');
+		        $('#line-sub-list').show();
+		        $('.allsub').addClass('on');
+
+		        get_sub_options('subway', e.target.text)
+		        console.log(ttc())
+		    });
+
+		    $(".hide.all").click(function(e) {
+				$('#line-sub-list').hide()
+		    });
+
+
+		    $(".zffs.option-list a").click(function(e) {
+		        $(".zffs.option-list a").removeClass('on');
+		        $(e.target).addClass('on');
+		        console.log(ttc())
 		    });
 
 		})
@@ -104,7 +201,7 @@
 				                <dt>区域：</dt>
 				                <dd data-index="0">
 				                    <div class="option-list area">
-				                        <a href="#" class="all on">不限</a>
+				                        <a href="#" class="hide all on">不限</a>
 				                        <a href="#">东城</a>
 				                        <a href="#">西城</a>
 				                        <a href="#">朝阳</a>
@@ -118,12 +215,6 @@
 				                        <a href="#">顺义</a>
 				                        <a href="#">房山</a>
 				                        <a href="#">门头沟</a>
-				                        <a href="#">平谷</a>
-				                        <a href="#">怀柔</a>
-				                        <a href="#">密云</a>
-				                        <a href="#">延庆</a>
-				                        <a href="https://lf.lianjia.com/zufang/yanjiao/">燕郊</a>
-				                        <a href="https://lf.lianjia.com/zufang/xianghe/">香河</a>
 				                    </div>
 				                </dd>
 				            </dl>
@@ -137,8 +228,8 @@
 					        <dl class="dl-lst clear" style="margin-bottom: 0rem;">
 					        	<dt>地铁：</dt>
 					            <dd data-index="1">
-					                <div class="option-list">
-										<a href="#" class="all on">不限</a>
+					                <div class="option-list subway">
+										<a href="#" class="hide all on">不限</a>
 										<a href="#">1号线</a>
 										<a href="#">2号线</a>
 										<a href="#">4号线</a>
@@ -169,23 +260,16 @@
 				</div>
 
 
-
-
 				<div class="card-body border-bottom" style="margin-bottom: 10px; padding:0px 1.25rem 0.25rem;">
 		  			<div class="bd" id="filter-options">
-							<div class="sub-option-list" id="line-sub-list" style="display: none">
-		                        <a class="select" href="#" id="0">不限</a>
-		                        <a class="undefined" href="#" id="118">潞城</a>
-		                        <a class="undefined" href="#" id="119">东厦园</a>
-		                        <a class="undefined" href="#" id="120">郝家府</a>
-		                        <a class="undefined" href="#" id="121">北运河东</a>
-		                        <a class="undefined" href="#" id="122">北运河西</a><a class="undefined" href="#" id="123">通运门</a><a class="undefined" href="#" id="124">通州北关</a><a class="undefined" href="#" id="125">物资学院路</a><a class="undefined" href="#" id="126">草房</a><a class="undefined" href="#" id="127">常营</a><a class="undefined" href="#" id="128">黄渠</a><a class="undefined" href="#" id="129">褡裢坡</a><a class="undefined" href="#" id="130">青年路</a><a class="undefined" href="#" id="131">十里堡</a><a class="undefined" href="#" id="132">金台路</a><a class="undefined" href="#" id="133">呼家楼</a><a class="undefined" href="#" id="134">东大桥</a><a class="undefined" href="#" id="135">朝阳门</a><a class="undefined" href="#" id="136">东四</a><a class="undefined" href="#" id="137">南锣鼓巷</a><a class="undefined" href="#" id="138">北海北</a><a class="undefined" href="#" id="139">平安里</a><a class="undefined" href="#" id="140">车公庄</a><a class="undefined" href="#" id="141">车公庄西</a><a class="undefined" href="#" id="142">白石桥南</a><a class="undefined" href="#" id="143">花园桥</a><a class="undefined" href="#" id="144">慈寿寺</a><a class="undefined" href="#" id="145">海淀五路居</a>
+							<div class="sub-option-list" id="line-sub-list" style="display: none; width:100%">
+		                        
 		               		</div>
 
 			            <dl class="dl-lst clear">
 			                <dt>方式：</dt>
 			                <dd data-index="0">
-			                    <div class="option-list">
+			                    <div class="option-list zffs">
 			                        <a href="#" class="all on">不限</a>
 			                        <a href="#">求租</a>
 			                        <a href="#">整租</a>
@@ -217,14 +301,19 @@
 
 	   $(function () {
 	        $('#table').bootstrapTable({
-	            url: '/jsondata',  // 请求数据源的路由
+	            url: '/jsondata',
 	            method: 'get',
 			    queryParams: function (p) {
-			    	console.log($('.area a'))
+			    	parameters = ttc()
 			        return {
 			            id: 'aa', 
 			            limit: p.limit,
-			            offset: p.offset
+			            offset: p.offset,
+			            method: parameters['method'],
+			            area: parameters['area'],
+						subway: parameters['subway'],
+						suboption: parameters['suboption'] ,
+						zffs: parameters['zffs']
 			        };
 			    },
 	            dataType: "json",
