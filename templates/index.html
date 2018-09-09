@@ -305,6 +305,7 @@
 	            method: 'get',
 			    queryParams: function (p) {
 			    	parameters = ttc()
+			    	console.log(parameters)
 			        return {
 			            id: 'aa', 
 			            limit: p.limit,
@@ -336,29 +337,29 @@
 	            detailView: false, //是否显示父子表，设置为 true 可以显示详细页面模式,在每行最前边显示+号#}
 	            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
 	            buttonsClass: 'light',
-	            columns: [{  //定义表头,这个表头必须定义,下边field后边跟的字段名字必须与后端传递的字段名字相同.如:id、name、price
-	                field: 'id',
-	                title: '序号',
-	                align: 'center',  //对齐方式，居中
-	                width: '200px'  // 可以写各种样式#}
-	            }, {
-	                field: 'name',
-	                title: '名称',
-	                align: 'center'
-	            }, {
-	                field: 'price',
-	                title: '价格',
-	                align: 'center',
+	            columns: [
 
-	            }, {
-	                title: '操作',
-	                field: 'id',
+	            {
+	                field: 'title',
+	                title: '名称',
 	                align: 'center',
 	                formatter: function (value, row, index) {
-	                    var e = '<a href="#" mce_href="#" onclick="edit(\'' + row.id + '\')">编辑</a> ';  //row.id为每行的id
-	                    var d = '<a href="#" mce_href="#" onclick="del(\'' + row.id + '\')">删除</a> ';
-	                    return e + d;
+	                    var e = '<a href="' + value.href + '">' + value.title + '</a> '
+	                    return e;
 	                }
+
+	            }, {
+	                field: 'source',
+	                title: '序号',
+	                align: 'center'
+	            }, /*{
+	                field: 'user',
+	                title: 'uu',
+	                align: 'center',
+	            },*/ {
+	                field: 'post_time',
+	                title: 'pt',
+	                align: 'center',
 	            }
 	            ],
 	        });
