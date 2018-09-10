@@ -80,13 +80,15 @@
 			subway = $(".subway.option-list a.on").text();
 			suboption = $('#line-sub-list a.on').text()
 			zffs = $(".zffs.option-list a.on").text();
+			search = $("#searchipt").val()
 
 			result = {
 				'method': method,
 				'area': area,
 				'subway': subway,
 				'suboption': suboption,
-				'zffs': zffs
+				'zffs': zffs,
+				'search': search
 			}
 			
 			return result;
@@ -94,6 +96,7 @@
 
 		function add_sublist_click_function(){
 		    $("#line-sub-list a").click(function(e) {
+		    	$("#searchipt").val('')
 		        $("#line-sub-list a").removeClass('on');
 		        $(e.target).addClass('on');
 
@@ -147,7 +150,7 @@
 	                title: '租房信息',
 	                align: 'left',
 	                formatter: function (value, row, index) {
-	                    var e = '<a href="' + value.href + '">' + value.title + '</a> '
+	                    var e = '<a target="_blank"  href="' + value.href + '">' + value.title + '</a> '
 	                    return e;
 	                }
 	            }, {
@@ -225,6 +228,7 @@
 		    });
 
 		    $(".area.option-list a").click(function(e) {
+		    	$("#searchipt").val('')
 		        $(".area.option-list a").removeClass('on');
 		        $(e.target).addClass('on'); 
 		        $("#line-sub-list a").removeClass('on');
@@ -237,6 +241,7 @@
 		    });
 
 		    $(".subway.option-list a").click(function(e) {
+		    	$("#searchipt").val('')
 		        $(".subway.option-list a").removeClass('on');
 		        $(e.target).addClass('on'); 
 		        $("#line-sub-list a").removeClass('on');
@@ -250,6 +255,7 @@
 		    });
 
 		    $(".hide.all").click(function(e) {
+		    	$("#searchipt").val('')
 				$('#line-sub-list').hide()
 		    });
 

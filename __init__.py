@@ -40,13 +40,13 @@ def jsondata():
     suboption = info.get('suboption')
     zffs = info.get('zffs')
 
-    search = info.get('search', 0)
+    search = info.get('search', '')
 
     print method, m_area, m_subway, suboption, zffs
 
     sqlscript = 'SELECT * from HOUSE where 1=1 '
 
-    if search != 0:
+    if len(search) != 0:
         sqlscript += " and ( "
         search = search.encode('utf8')
         all_sub = [" TITLE GLOB '*%s*' " % (search)]
