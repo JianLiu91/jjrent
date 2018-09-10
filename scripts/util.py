@@ -2,7 +2,7 @@
 
 def area():
     result ={}
-    for line in open('scripts/area.txt'):
+    for line in open('resources/area.txt'):
         key, value = line.strip().split(':')
         value = value.split(' ')
         result[key] = value
@@ -10,9 +10,20 @@ def area():
 
 def subway():
     result ={}
-    for line in open('scripts/subway.txt'):
+    for line in open('resources/subway.txt'):
         key, value = line.strip().split(':')
         key, value = key.strip(), value.strip()
         value = value.split(' ')
         result[key] = value
     return result 
+
+
+def xiaoqu():
+    result ={}
+    for line in open('resources/xiaoqu_all.txt'):
+        fields = line.strip().split('\t')
+        large, small, opt = fields[0], fields[1], fields[2]
+        result.setdefault(large, {})
+        result[large].setdefault(small, [])
+        result[large][small].append(opt)
+    return result
