@@ -24,7 +24,6 @@ def get_sub_options():
     info = request.values
     type_p = info.get('type')
     value = info.get('value').encode('utf8')
-    print type_p
     value = area[value] if type_p == 'area' else subway[value]
     return jsonify({'data': value})
 
@@ -41,29 +40,61 @@ def jsondata():
     suboption = info.get('suboption')
     zffs = info.get('zffs')
 
+    search = info.get('search', 0)
+
     print method, m_area, m_subway, suboption, zffs
 
     sqlscript = 'SELECT * from HOUSE where 1=1 '
 
-    if not (suboption == u'不限' or len(suboption.strip()) == 0):
-        sqlscript += " and TITLE GLOB '*%s*' " % (suboption)
+    if search != 0:
+        sqlscript += " and ( "
+        search = search.encode('utf8')
+        all_sub = [" TITLE GLOB '*%s*' " % (search)]
+        try:
+            sub_xiaoqu = [" TITLE GLOB '*%s*' " % t for t in xiaoqu[search]]
+            all_sub += sub_xiaoqu
+        except Exception, e:
+            print e
+
+        sqlscript += " or ".join(all_sub) + ' ) '
+
+    elif not (suboption == u'不限' or len(suboption.strip()) == 0):
+        suboption = suboption.encode('utf8')
+        sqlscript += " and ( "
+        all_sub = [" TITLE GLOB '*%s*' " % (suboption)]
+        try:
+            sub_xiaoqu = [" TITLE GLOB '*%s*'" % t for t in xiaoqu[suboption]]
+            all_sub += sub_xiaoqu
+        except Exception, e:
+            print e
+        sqlscript += " or ".join(all_sub) + ' ) '
     
     elif m_area != u'不限':
         temp = ' and ( '
         m_area = m_area.encode('utf8')
+
         all_area = ["TITLE GLOB '*%s*'" % t for t in area[m_area]]
+        all_area = all_area + ["TITLE GLOB '*%s*'" % t for t in xiaoqu[m_area]][:900]
         sql_area = " or ".join(all_area)
         sqlscript += temp + sql_area + ')'
         
     elif m_subway != u'不限':
-        pass
+        temp = ' and ( '
+        m_subway = m_subway.encode('utf8')
+        all_subway = ["TITLE GLOB '*%s*'" % t for t in subway[m_subway]]
+        print len(all_subway)
+        for elem in subway[m_subway]:
+            try:
+                all_subway += ["TITLE GLOB '*%s*'" % t for t in xiaoqu[elem]]
+            except Exception, e:
+                pass
+        sql_area = " or ".join(all_subway)
+        sqlscript += temp + sql_area + ')'
 
 
     if zffs != u'不限':
         zffs = zffs[0]
-        sqlscript = sqlscript + " and TITLE GLOB '*%s*' " % zffs
-
-    print sqlscript
+        sqlscript = sqlscript + " and TITLE GLOB '*%s*' " % zffs.encode('utf8')
 
     data = []
     conn = sqlite3.connect('db/test.db')

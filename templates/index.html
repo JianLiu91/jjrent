@@ -50,9 +50,9 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		    <div class="container">
 
-		      <form action="/" method="POST" class="form-inline" role="form">
-			    <input class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
-			    <button class="btn btn-success" type="submit">搜索</button>
+		      <form class="form-inline">
+			    <input id='searchipt' class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
+			    <button id="searchbtn" class="btn btn-success">搜索</button>
 		      </form>
 
 		    </div>
@@ -117,7 +117,8 @@
 			            area: parameters['area'],
 						subway: parameters['subway'],
 						suboption: parameters['suboption'] ,
-						zffs: parameters['zffs']
+						zffs: parameters['zffs'],
+						search: parameters['search']
 			        };
 			    },
 	            dataType: "json",
@@ -200,8 +201,16 @@
 		}
 
 
-
 		$(function(){
+			$("#searchbtn").click(function(e) {
+				parameters = ttc()
+				parameters['search'] = $("#searchipt").val()
+				$("#table").bootstrapTable('destroy');
+				update_table(parameters)
+
+		    });
+
+
 			$(".nav-item").click(function(e) {
 		        $(".option-list a").removeClass('on'); 
 		        $('.all').addClass('on');
@@ -214,7 +223,6 @@
 				$("#table").bootstrapTable('destroy');
 				update_table(parameters)
 		    });
-
 
 		    $(".area.option-list a").click(function(e) {
 		        $(".area.option-list a").removeClass('on');
