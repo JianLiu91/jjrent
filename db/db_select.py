@@ -6,7 +6,7 @@ conn = sqlite3.connect('test.db')
 print "Opened database successfully";
 c = conn.cursor()
 
-sqlscript = 'SELECT * from HOUSE where 1=1 '
+sqlscript = 'SELECT * from HOUSE where 1=1 and SOURCE="douban"'
 
 # m_area = u'东城'
 

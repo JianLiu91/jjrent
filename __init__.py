@@ -16,6 +16,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    ip = request.remote_addr
+    print ip
     return render_template('index.html')
 
 
@@ -95,6 +97,8 @@ def jsondata():
     if zffs != u'不限':
         zffs = zffs[0]
         sqlscript = sqlscript + " and TITLE GLOB '*%s*' " % zffs.encode('utf8')
+
+    sqlscript += ' ORDER BY CRAWL_TIME '
 
     data = []
     conn = sqlite3.connect('db/test.db')
