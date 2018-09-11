@@ -1,0 +1,2 @@
+0 * * * * /bin/sh /home/ryan/project/jjrent/spider/crawl_newsmth.sh
+30 * * * * /bin/sh /home/ryan/project/jjrent/spider/crawl_douban.sh
