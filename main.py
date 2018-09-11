@@ -37,6 +37,7 @@ xiaoqu = xiaoqu()
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     ip = request.remote_addr
@@ -75,6 +76,34 @@ def index():
     conn.close()
 
     return render_template('index.html', sta=sta)
+
+
+# about
+@app.route("/about")
+def about():
+    conn = sqlite3.connect('db/test.db')
+    c = conn.cursor()
+
+    def _query(c, sqlscript):
+        cursor = c.execute(sqlscript)
+        return cursor.fetchall()[0][0]
+
+    tpv = _query(c, 'SELECT count(*) FROM VISIT;')
+    tip = _query(c, 'SELECT count(distinct IP) FROM VISIT;')
+
+    dpv = _query(c, "SELECT count(*) FROM VISIT where DATE(VISIT_TIME) = DATE('now', '-0 day', 'localtime');")
+    dip = _query(c, "SELECT count(distinct IP) FROM VISIT where DATE(VISIT_TIME) = DATE('now', '-0 day', 'localtime');")
+
+    sta = {
+        'tpv': tpv,
+        'tip': tip,
+        'dpv': dpv,
+        'dip': dip
+    }
+
+    conn.close()
+
+    return render_template('about.html', sta=sta)
 
 
 @app.route('/get_sub_options', methods=['GET'])
@@ -161,7 +190,7 @@ def jsondata():
         if n == '1':
             temp = ['1', '一']
         elif n == '2':
-            temp = ['2', '二']
+            temp = ['2', '二', '两']
         else:
             temp = ['3', '三']
 
