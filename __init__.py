@@ -13,7 +13,7 @@ from scripts.util import area, subway, xiaoqu
 
 logFile = 'web.log'
 
-log_formatter = logging.Formatter("%(asctime)s - %(message)s")
+log_formatter = logging.Formatter("%(message)s - %(asctime)s")
 
 file_handler = logging.FileHandler(logFile)
 file_handler.setFormatter(log_formatter)
@@ -31,8 +31,6 @@ log.setLevel(logging.WARNING)
 log.addHandler(file_handler)
 log.addHandler(stream_handler)
 
-log.warning('This is a message')
-
 area = area()
 subway = subway()
 xiaoqu = xiaoqu()
@@ -44,7 +42,7 @@ def index():
     ip = request.remote_addr
     nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    log.warning('[%s] %s', str(ip), 'is logging in...')
+    log.warning('[%s] %s', str(ip), 'is logging...')
 
     conn = sqlite3.connect('db/test.db')
     c = conn.cursor()
@@ -92,7 +90,7 @@ def get_sub_options():
 def jsondata():
 
     info = request.values
-    limit = info.get('limit', 10)
+    limit = info.get('limit',  10)
     offset = info.get('offset', 0)
 
     method = info.get('method')
@@ -104,7 +102,7 @@ def jsondata():
     search = info.get('search', '')
 
     ip = request.remote_addr
-    log.warning('[%s] %s [<<..%s..>> %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs)
+    log.warning('[%s] %s ["%s" %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs)
 
     sqlscript = ' '
 
@@ -183,3 +181,7 @@ def jsondata():
     conn.close()
 
     return jsonify({'total': len(data), 'rows': data[int(offset):(int(offset) + int(limit))]})
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
