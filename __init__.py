@@ -1,12 +1,37 @@
 # -*- coding: utf8 -*-
 
+import logging
+import sqlite3
+import datetime
+
 from flask import Flask
 from flask import render_template, jsonify, request
 
 from random import choice
 from scripts.util import area, subway, xiaoqu
 
-import sqlite3
+
+logFile = 'web.log'
+
+log_formatter = logging.Formatter("%(asctime)s - %(message)s")
+
+file_handler = logging.FileHandler(logFile)
+file_handler.setFormatter(log_formatter)
+file_handler.setLevel(logging.WARNING)
+
+#Setup Stream Handler (i.e. console)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(log_formatter)
+stream_handler.setLevel(logging.WARNING)
+
+log = logging.getLogger(__name__)
+log.setLevel(logging.WARNING)
+
+#Add both Handlers
+log.addHandler(file_handler)
+log.addHandler(stream_handler)
+
+log.warning('This is a message')
 
 area = area()
 subway = subway()
@@ -17,8 +42,41 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     ip = request.remote_addr
-    print ip
-    return render_template('index.html')
+    nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    log.warning('[%s] %s', str(ip), 'is logging in...')
+
+    conn = sqlite3.connect('db/test.db')
+    c = conn.cursor()
+
+    sqltext = '''
+        INSERT INTO VISIT (IP,VISIT_TIME)
+        VALUES ('%s', '%s');
+        ''' % (ip, nowTime)
+
+    c.executescript(sqltext)
+    conn.commit()
+
+    def _query(c, sqlscript):
+        cursor = c.execute(sqlscript)
+        return cursor.fetchall()[0][0]
+
+    tpv = _query(c, 'SELECT count(*) FROM VISIT;')
+    tip = _query(c, 'SELECT count(distinct IP) FROM VISIT;')
+
+    dpv = _query(c, "SELECT count(*) FROM VISIT where DATE(VISIT_TIME) = DATE('now', '-0 day', 'localtime');")
+    dip = _query(c, "SELECT count(distinct IP) FROM VISIT where DATE(VISIT_TIME) = DATE('now', '-0 day', 'localtime');")
+
+    sta = {
+        'tpv': tpv,
+        'tip': tip,
+        'dpv': dpv,
+        'dip': dip
+    }
+
+    conn.close()
+
+    return render_template('index.html', sta=sta)
 
 
 @app.route('/get_sub_options', methods=['GET'])
@@ -32,6 +90,7 @@ def get_sub_options():
 
 @app.route('/jsondata', methods=['GET'])
 def jsondata():
+
     info = request.values
     limit = info.get('limit', 10)
     offset = info.get('offset', 0)
@@ -44,9 +103,10 @@ def jsondata():
 
     search = info.get('search', '')
 
-    print method, m_area, m_subway, suboption, zffs
+    ip = request.remote_addr
+    log.warning('[%s] %s [<<..%s..>> %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs)
 
-    sqlscript = 'SELECT * from HOUSE where 1=1 '
+    sqlscript = ' '
 
     if len(search) != 0:
         sqlscript += " and ( "
@@ -84,7 +144,6 @@ def jsondata():
         temp = ' and ( '
         m_subway = m_subway.encode('utf8')
         all_subway = ["TITLE GLOB '*%s*'" % t for t in subway[m_subway]]
-        print len(all_subway)
         for elem in subway[m_subway]:
             try:
                 all_subway += ["TITLE GLOB '*%s*'" % t for t in xiaoqu[elem]]
@@ -98,17 +157,29 @@ def jsondata():
         zffs = zffs[0]
         sqlscript = sqlscript + " and TITLE GLOB '*%s*' " % zffs.encode('utf8')
 
-    sqlscript += ' ORDER BY CRAWL_TIME '
+    #sqlscript += ' ORDER BY POST_TIME DESC '
+
+    normal_user = 'SELECT *, 0 from HOUSE where 1=1 ' + sqlscript + ' AND USER NOT IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4)'
+    cheat_user  = 'SELECT *, 1 from HOUSE where 1=1 ' + sqlscript + ' AND USER IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4)'
+
+    all_user = ' ( %s UNION ALL %s ) ' %  (normal_user, cheat_user)
+
+    sqlscript = 'SELECT * from %s %s' % (all_user, 'ORDER BY POST_TIME DESC')
 
     data = []
     conn = sqlite3.connect('db/test.db')
     c = conn.cursor()
 
-    cursor = c.execute(sqlscript)
+    cursor = c.execute(sqlscript).fetchall()
     for row in cursor:
         d = {}
-        d['source'], d['title'], d['user'], d['post_time'] = row[0], {'href':row[1], 'title': row[2]}, row[3], row[4]
+        d['source'], d['title'], d['user'], d['post_time'] = (
+            row[0], 
+            {'href':row[1], 'title': row[2][:40], 'flag': row[6]}, 
+            {'u':row[3], 'flag': row[6]}, 
+            row[4])
         data.append(d)
+    
     conn.close()
 
     return jsonify({'total': len(data), 'rows': data[int(offset):(int(offset) + int(limit))]})

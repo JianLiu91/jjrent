@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-	<title>JJRent</title>
+	<title>敬娟找房</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="RyanRent">
@@ -26,7 +26,7 @@
     <header>
 		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
 		  <div class="container">
-		    <a class="navbar-brand" href="/"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534825591802&di=d991e6502470e64641b4a68a78b55f4d&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Fface%2F82436bc0481cf83e3b157a7b545bdd85f3705792.jpg" width="30" height="30" class="d-inline-block align-top mr-sm-2 mb-sm-0" alt="" >ABC</a>
+		    <a class="navbar-brand" href="/"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534825591802&di=d991e6502470e64641b4a68a78b55f4d&imgtype=0&src=http%3A%2F%2Fi2.hdslb.com%2Fbfs%2Fface%2F82436bc0481cf83e3b157a7b545bdd85f3705792.jpg" width="30" height="30" class="d-inline-block align-top mr-sm-2 mb-sm-0" alt="" >敬娟找房</a>
 
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="navbar-collapse collapse order-3 dual-collapse2">
-		        <ul class="navbar-nav ml-auto">
+		        <ul class="navbar-nav ml-auto active">
 		            <li class="nav-item">
 		                <a class="nav-item nav-link" href="/">关于</a>
 		            </li>
@@ -64,8 +64,8 @@
 
 		<!--	<nav class="border-top-0"> -->
 			  <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
-				    <a class="nav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
-				    <a class="nav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
+				    <a class="nav-item mynav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
+				    <a class="nav-item mynav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
 
 			  </div>
 		</div>
@@ -131,8 +131,8 @@
 	            striped: false, //是否显示行间隔色
 	            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
 	            pageNumber: 1, //初始化加载第10页，默认第一页
-	            pageSize: 10, //每页的记录行数（*）
-	            pageList: [10, 20, 50, 100], //可供选择的每页的行数（*）
+	            pageSize: 15, //每页的记录行数（*）
+	            pageList: [15, 30, 60, 100], //可供选择的每页的行数（*）
 	            strictSearch: true,//设置为 true启用 全匹配搜索，false为模糊搜索
 	            showColumns: false, //显示内容列下拉框
 	            showRefresh: false, //显示刷新按钮
@@ -150,7 +150,8 @@
 	                title: '租房信息',
 	                align: 'left',
 	                formatter: function (value, row, index) {
-	                    var e = '<a target="_blank"  href="' + value.href + '">' + value.title + '</a> '
+	                	var color = value.flag == '0'? '' : 'text-danger'
+	                    var e = '<a class="' + color + ' ' + 'target="_blank"  href="' + value.href + '">' + value.title + '</a>'
 	                    return e;
 	                }
 	            }, {
@@ -161,6 +162,11 @@
 	                field: 'user',
 	                title: '是否中介(beta)',
 	                align: 'center',
+	                formatter: function (value, row, index) {
+	                	var color = value.flag == '0'? '' : 'bg-danger text-white'
+	                    var e = '<div class="' + color + ' ">' + value.u + '</div> '
+	                    return e;
+	                }
 	            },{
 	                field: 'source',
 	                title: '来源',
@@ -214,7 +220,7 @@
 		    });
 
 
-			$(".nav-item").click(function(e) {
+			$(".mynav-item").click(function(e) {
 		        $(".option-list a").removeClass('on'); 
 		        $('.all').addClass('on');
 		        $("#line-sub-list a").removeClass('on');
@@ -363,17 +369,19 @@
 			</div>
 
         <div style="width: 100%; margin: 0 auto">
-            <table id="table"></table>
+            <table id="table" style="font-size:15px;"></table>
         </div>
 
 	</div>  <!-- contrainer -->
 
 
 	<div class="container">
+		<hr />
 		<footer>
-			
-			<p style="float:center">
-			<p style="float:right">&copy; Ryan 2016</p>
+			<div style="width:100%">
+				<span class="font-weight-light" style="float:left;font-size:15px">总:{{ sta.tip }}IP, {{ sta.tpv }} PV | 今:{{ sta.dip }}IP, {{ sta.dpv }}PV </span>
+				<span class="font-weight-light" style="float:right;font-size:15px">&copy; Ryan 2016</span>
+			</div>
 		</footer>
 	</div>
 	<!-- /container -->

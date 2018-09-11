@@ -1,7 +1,7 @@
 .filter-box .bd {
     padding: 12px 26px 12px;
     background: #fff;
-    font-size: 12px;
+    font-size: 14px;
     position: relative;
 }
 
@@ -12,7 +12,7 @@
     height: 27px;
     line-height: 27px;
     color: #333;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .dl-lst dd a.on {
@@ -51,4 +51,8 @@
 
 .sub-option-list a.on {
     font-weight: 700;
+}
+
+.page-list,.pagination-info,.pagination {
+    font-size: 13px;
 }
