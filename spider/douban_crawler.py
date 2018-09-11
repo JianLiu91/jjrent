@@ -6,7 +6,7 @@ import logging
 
 from bs4 import BeautifulSoup
 from time import gmtime, strftime
-from proxy import get_proxies3 as get_proxies
+from proxy import get_proxies4 as get_proxies
 
 logging.basicConfig(filename='z_douban.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
