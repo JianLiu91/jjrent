@@ -1,3 +1,4 @@
 *.pyc
 web.log
 db/test.db
+spider/*.log

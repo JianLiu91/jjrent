@@ -3,8 +3,11 @@ from bs4 import BeautifulSoup
 import requests
 import datetime
 import time
+import logging
 
 import sqlite3
+
+logging.basicConfig(filename='z_newsmth.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
 def transfer_post_time(post_time):
     fields = post_time.split('-')
@@ -60,8 +63,9 @@ def crawl(url):
 
 
 if __name__ == '__main__':
+    
     for i in range(30):
         url = 'http://m.newsmth.net/board/HouseRent?p=%d' % (i)
-        print url
+        logging.warning(url)
         crawl(url)
         time.sleep(4)

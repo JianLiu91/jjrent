@@ -2,9 +2,12 @@ import requests
 import sqlite3
 import datetime
 import time
+import logging
 
 from bs4 import BeautifulSoup
 from time import gmtime, strftime
+
+logging.basicConfig(filename='z_douban.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
 headers = {
     'content-type': 'application/json',
@@ -23,7 +26,7 @@ def crawl(url):
 
     table = soup.find('table', {"class": "olt"})
     if not table:
-        print 'ERROR'
+        logging.warning('ERROR')
         return
     for tr in table.find_all('tr')[1:]:
         title = tr.find('a').get('title')
@@ -65,6 +68,6 @@ if __name__ == '__main__':
     for address in douban_add:
         for i in range(0, 500, 25):
             url = '%s%d' % (address, i)
-            print url
+            logging.warning(url)
             crawl(url)
             time.sleep(20)
