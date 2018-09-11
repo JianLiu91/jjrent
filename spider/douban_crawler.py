@@ -87,4 +87,4 @@ if __name__ == '__main__':
             else:
                 proxy_list = [None] + get_proxies()['https']
                 logging.warning('Get %s proxies', str(len(proxy_list)-1))
-            time.sleep(20)
+            time.sleep(10)
