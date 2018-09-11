@@ -61,11 +61,11 @@ if __name__ == '__main__':
     douban_add = [
         'https://www.douban.com/group/beijingzufang/discussion?start=',
         'https://www.douban.com/group/26926/discussion?start=',
-        'https://www.douban.com/group/279962/discussion?start=',
-        'https://www.douban.com/group/zhufang/discussion?start=',
-        'https://www.douban.com/group/sweethome/discussion?start=',
-        'https://www.douban.com/group/opking/discussion?start=',
-        'https://www.douban.com/group/257523/discussion?start='
+        'https://www.douban.com/group/279962/discussion?start='
+        #'https://www.douban.com/group/zhufang/discussion?start=',
+        #'https://www.douban.com/group/sweethome/discussion?start=',
+        #'https://www.douban.com/group/opking/discussion?start=',
+        #'https://www.douban.com/group/257523/discussion?start='
     ]
 
     proxy_list = [None] + get_proxies()['https']
