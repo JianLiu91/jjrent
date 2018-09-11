@@ -134,7 +134,7 @@ def jsondata():
         m_area = m_area.encode('utf8')
 
         all_area = ["TITLE GLOB '*%s*'" % t for t in area[m_area]]
-        all_area = all_area + ["TITLE GLOB '*%s*'" % t for t in xiaoqu[m_area]][:900]
+        all_area = all_area + ["TITLE GLOB '*%s*'" % t for t in xiaoqu[m_area]][:300]
         sql_area = " or ".join(all_area)
         sqlscript += temp + sql_area + ')'
         
