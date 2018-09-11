@@ -6,13 +6,13 @@ import logging
 
 from bs4 import BeautifulSoup
 from time import gmtime, strftime
-from proxy import get_proxies
+from proxy import get_proxies2 as get_proxies
 
 logging.basicConfig(filename='z_douban.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
 headers = {
     'content-type': 'application/json',
-    'cookie': 'bid=mipulml9leo; __yadk_uid=k8itsZjjtLz2vZjdyOLpaMaXutoohvOq; ll="108288"; douban-fav-remind=1; ps=y; douban-profile-remind=1; ap=1; push_noty_num=0; push_doumail_num=0; ue="ryanliu1991@gmail.com"; viewed="27594708"; gr_user_id=180187fa-c4ac-4129-8801-e6b649b2942f; _vwo_uuid_v2=DCCE22D01CADEE6C82DF7C5245F3B0D84|40214232d84e7997ec422dc7c5a4f8b5; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1536673723%2C%22https%3A%2F%2Fwww.google.com.hk%2F%22%5D; ap_v=0,6.0; _pk_id.100001.8cb4=4c5f84b8f97f9e9e.1535032518.10.1536673801.1536661506.; _pk_ses.100001.8cb4=*; __utma=30149280.520709698.1535548023.1536661507.1536673723.6; __utmb=30149280.69.6.1536673801518; __utmc=30149280; __utmz=30149280.1536661507.5.3.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)',
+    'cookie': '',
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'
     }
 
@@ -84,4 +84,7 @@ if __name__ == '__main__':
                 if crawl(url, requests_proxies):
                     logging.warning('OK')
                     break
+            else:
+                proxy_list = [None] + get_proxies()['https']
+                logging.warning('Get %s proxies', str(len(proxy_list)-1))
             time.sleep(20)
