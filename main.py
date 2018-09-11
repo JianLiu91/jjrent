@@ -98,11 +98,12 @@ def jsondata():
     m_subway = info.get('subway')
     suboption = info.get('suboption')
     zffs = info.get('zffs')
+    jushi = info.get('jushi')
 
     search = info.get('search', '')
 
     ip = request.remote_addr
-    log.warning('[%s] %s ["%s" %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs)
+    log.warning('[%s] %s ["%s" %s %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs, jushi)
 
     sqlscript = ' '
 
@@ -155,7 +156,20 @@ def jsondata():
         zffs = zffs[0]
         sqlscript = sqlscript + " and TITLE GLOB '*%s*' " % zffs.encode('utf8')
 
-    #sqlscript += ' ORDER BY POST_TIME DESC '
+    if jushi != u'不限':
+        n = jushi[0]
+        if n == '1':
+            temp = ['1', '一']
+        elif n == '2':
+            temp = ['2', '二']
+        else:
+            temp = ['3', '三']
+
+        temp = [" TITLE GLOB '*%s居*' " % x for x in temp]
+        t = " and ( " + ' OR '.join(temp) + ' ) '
+
+        sqlscript = sqlscript + t
+
 
     normal_user = 'SELECT *, 0 from HOUSE where 1=1 ' + sqlscript + ' AND USER NOT IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4)'
     cheat_user  = 'SELECT *, 1 from HOUSE where 1=1 ' + sqlscript + ' AND USER IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4)'

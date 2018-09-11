@@ -80,6 +80,7 @@
 			subway = $(".subway.option-list a.on").text();
 			suboption = $('#line-sub-list a.on').text()
 			zffs = $(".zffs.option-list a.on").text();
+			jushi = $(".jushi.option-list a.on").text();
 			search = $("#searchipt").val()
 
 			result = {
@@ -88,6 +89,7 @@
 				'subway': subway,
 				'suboption': suboption,
 				'zffs': zffs,
+				'jushi': jushi,
 				'search': search
 			}
 			
@@ -121,6 +123,7 @@
 						subway: parameters['subway'],
 						suboption: parameters['suboption'] ,
 						zffs: parameters['zffs'],
+						jushi: parameters['jushi'],
 						search: parameters['search']
 			        };
 			    },
@@ -274,6 +277,14 @@
 				update_table(ttc())
 		    });
 
+		    $(".jushi.option-list a").click(function(e) {
+		        $(".jushi.option-list a").removeClass('on');
+		        $(e.target).addClass('on');
+
+				$("#table").bootstrapTable('destroy');
+				update_table(ttc())
+		    });
+
 		})
 
 	</script>
@@ -361,6 +372,16 @@
 			                        <a href="#" class="all on">不限</a>
 			                        <a href="#">求租</a>
 			                        <a href="#">整租</a>
+			                    </div>
+			                </dd>
+
+			                <dt>居室：</dt>
+			                <dd data-index="0">
+			                    <div class="option-list jushi">
+			                        <a href="#" class="all on">不限</a>
+			                        <a href="#">1居</a>
+			                        <a href="#">2居</a>
+			                        <a href="#">3居</a>
 			                    </div>
 			                </dd>
 			            </dl>
