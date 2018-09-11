@@ -128,11 +128,13 @@ def jsondata():
     suboption = info.get('suboption')
     zffs = info.get('zffs')
     jushi = info.get('jushi')
+    filr = info.get('filter')
+    tag = info.get('tag')
 
     search = info.get('search', '')
 
     ip = request.remote_addr
-    log.warning('[%s] %s ["%s" %s %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs, jushi)
+    log.warning('[%s] %s ["%s" %s %s %s %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs, jushi, filr, tag)
 
     sqlscript = ' '
 
@@ -197,6 +199,15 @@ def jsondata():
         temp = [" TITLE GLOB '*%s居*' " % x for x in temp]
         t = " and ( " + ' OR '.join(temp) + ' ) '
 
+        sqlscript = sqlscript + t
+
+    if filr == u'开启':
+        t = ' AND USER NOT IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4) '
+        sqlscript = sqlscript + t
+
+    if tag != u'不限':
+
+        t = ' and SOURCE="%s" ' % ('newsmth' if tag==u'水木' else 'douban')
         sqlscript = sqlscript + t
 
 

@@ -80,6 +80,8 @@
 			suboption = $('#line-sub-list a.on').text()
 			zffs = $(".zffs.option-list a.on").text();
 			jushi = $(".jushi.option-list a.on").text();
+			filter = $(".filter.option-list a.on").text();
+			tag = $(".tag.option-list a.on").text();
 			search = $("#searchipt").val()
 
 			result = {
@@ -89,6 +91,8 @@
 				'suboption': suboption,
 				'zffs': zffs,
 				'jushi': jushi,
+				'filter': filter,
+				'tag': tag,
 				'search': search
 			}
 			
@@ -123,6 +127,8 @@
 						suboption: parameters['suboption'] ,
 						zffs: parameters['zffs'],
 						jushi: parameters['jushi'],
+						filter: parameters['filter'],
+						tag: parameters['tag'],
 						search: parameters['search']
 			        };
 			    },
@@ -284,6 +290,22 @@
 				update_table(ttc())
 		    });
 
+		    $(".filter.option-list a").click(function(e) {
+		        $(".filter.option-list a").removeClass('on');
+		        $(e.target).addClass('on');
+
+				$("#table").bootstrapTable('destroy');
+				update_table(ttc())
+		    });
+
+		    $(".tag.option-list a").click(function(e) {
+		        $(".tag.option-list a").removeClass('on');
+		        $(e.target).addClass('on');
+
+				$("#table").bootstrapTable('destroy');
+				update_table(ttc())
+		    });
+
 		})
 
 	</script>
@@ -365,6 +387,15 @@
 		               		</div>
 
 			            <dl class="dl-lst clear">
+			            	<dt>来源：</dt>
+			                <dd data-index="0">
+			                    <div class="option-list tag">
+			                        <a href="#" class="all on">不限</a>
+			                        <a href="#">水木</a>
+			                        <a href="#">豆瓣</a>
+			                    </div>
+			                </dd>
+
 			                <dt>方式：</dt>
 			                <dd data-index="0">
 			                    <div class="option-list zffs">
@@ -383,6 +414,15 @@
 			                        <a href="#">3居</a>
 			                    </div>
 			                </dd>
+
+			                <dt class="text-white bg-dark">过滤模式</dt>
+			                <dd data-index="0">
+			                    <div class="option-list filter">
+			                        <a href="#" class="all on">关闭</a>
+			                        <a href="#">开启</a>
+			                    </div>
+			                </dd>
+
 			            </dl>
 			        </div>
 			    </div>
