@@ -21,11 +21,11 @@
     <link rel="stylesheet" type="text/css" href="static/style.css">
 
 </head>
-<body>
+<body  class="bg-light">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
           <div class="container">
-            <a class="navbar-brand" href="/"><img src="static/my.png" width="35" height="35" class="d-inline-block align-top mr-sm-2" alt="" >静妮找房</a>
+            <a class="navbar-brand" href="/"><img src="static/my.png" width="35" height="35" class="d-inline-block align-top mr-sm-1" alt="" >静妮找房</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -48,112 +48,92 @@
     </header>
 
         <div class="container mt-3">
-            <div class="row">
-                <div class="col-md-12">
-                    <article class="article the-font">
-                        <div class="comtainer">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <br>
-                                    <div align="center"><img src="http://7xlen8.com1.z0.glb.clouddn.com/avatar.jpg" style="height:220px;width:220px;border-radius:110px;display:block;text-align:center" align="center"></div>
-                                    <br>
-                                    <p class="lead text-center">ALJUN</p>
-                                    <p class="text-center"><em><span style="color:#ABAAAA">ONE MAN CAN CHANGE THE WORLD!    </span></em></p>
-                                    <br>
-                                    <p class="palette-paragraph"><strong>这个是我的个人网站，如果你喜欢，那就按下下面的"LIKE”按钮，给我动力继续写吧</strong></p>
-                                    <div style="cursor:pointer" class="btn btn-danger btn-large btn-block btn-like-add">LIKE <span class="glyphicon glyphicon-heart" aria-hidden="True"></span></div>
-                                    <hr>
-                                    <p>已经有了这么多<strong>LIKE</strong>:<a href="#"><span id="liked">11270</span></a></p>
+            <div class="row justify-content-md-center">
+                <div class="col col-lg-0">
+                </div>
+                <div class="col-lg-9">
+                        
+                            <div class="col-md-auto" style="float: center">
+				<br />
+                                <p><b class="mr-1" style="font-size: 18px">静妮找房</b>源自于<a class="text-muted" target="_blank" href="https://ryanrent.leanapp.cn">RyanRent</a>，旨在帮您从茫茫网络中寻找合适的直租房源。</p>
+
+<p>北漂不易，且行且珍惜。年轻人寻租时如果能直接同靠谱房东进行联系，无疑可以节省一笔可观的中介费用。然而目前网络上的租房信息十分杂乱，即使有一些直租平台，由于缺乏监管，虚假信息泛滥其中，这都给我们寻租带来了极大的困难。</p> <p> 静妮找房为此而生，目的在于帮您把真实的个人房源一网打尽，并且尽快找到适合自己的住所。静妮目前掌握的技能包括：信息采集(数据主要来源于水木和豆瓣)和中介识别(beta版本)；静妮以后会学习的技能包括：</p>
+                                <ul>
+                                    <li>地图寻租</li>
+				    <li>微信查询推送</li>
+                                    <li>更加智能化的信息处理，以及个人房源发布</li>
+                                </ul>
+                                <p>如果静妮帮您找到了适合的住房，还望您能不惜吝啬，从省去的中介费用中拿出小小的一部分，用以支持小站的维护和发展。静妮这厢有礼了:)</p>
+
+                                <script type="text/javascript">
+                                    $(function () {
+                                      $('.example-popover').popover({
+                                            container: 'body',
+                                            html : true,
+                                            content: function() {
+                                              return $('#QRCode').html();
+                                            }
+                                      });
+                                    })
+
+                                </script>
+
+                                <button type="button" class="btn btn-success example-popover">捐赠</button>
+
+
+                                <h3></h3>
+                                <div id='QRCode' style="display: none">
+                                    <div style="width:350px">
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-5">
+                                                <div align="center"><img src="static/ali.png" style="height:120px;width:120px;display:block;text-align:center" align="center">支付宝</div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div align="center"><img src="static/wx.png" style="height:120px;width:120px;display:block;text-align:center" align="center"><p>微信</p></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-9">
-                                    <h3>个人信息：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>姓名：陈阳洋</li>
-                                        <li>网名：Aljun（或者Salamer）</li>
-                                        <li>年龄：20</li>
-                                        <li>生日：1996/2/19</li>
-                                        <li>居住地：北京</li>
-                                        <li>学历：本科大二应用化学在读</li>
-                                    </ul>
-                                    <h3>联系方式：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>EMAIL:<a href="#">contactsalamer@163.com</a></li>
-                                        <li>WEIBO:<a href="http://weibo.com/2277966967/profile">陈阳洋invictus的微博_微博</a></li>
-                                        <li>ZHIHU:<a href="https://www.zhihu.com/people/gaga-salamer">gaga salamer</a></li>
-                                        <li>JIANSHU:<a href="http://www.jianshu.com/users/e14e85a6d30d/latest_articles">aljun</a></li>
-                                        <li>QQ:3028156088</li>
-                                    </ul>
-                                    <h3>个人代码库：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>GITHUB:<a href="https://github.com/salamer">https://github.com/salamer</a></li>
-                                        <li>该网站源代码:<a href="https://github.com/salamer/aljun.me">https://github.com/salamer/aljun.me</a></li>
-                                    </ul>
-                                    <h3>已学过的：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>python(django，flask，tornado之类的框架（该网站就是基于flask编写的），爬虫，科学处理与数据分析</li>
-                                        <li>sql</li>
-                                        <li>c,c++（做项目，码算法，看底层）</li>
-                                        <li>使用ruby的ruby on rails框架</li>
-                                        <li>bootstrap，pure等前端相应式布局</li>
-                                        <li>jquery,angularjs</li>
-                                        <li>nodejs</li>
-                                    </ul>
-                                    <h3>我的项目: </h3>
-                                    <hr>
-                                    <ul>
-                                        <li>我的个人博客:<a href="http://aljun.me">http//:aljun.me</a>（独力）</li>
-                                        <li>扎堆学社官网:<a href="http://zhaduixueshe.com">http://zhaduixueshe.com</a>（独力）</li>
-                                    </ul>
-                                    <h3>发展方向：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>机器学习与数据分析</li>
-                                        <li>数据挖掘</li>
-                                        <li>算法优化</li>
-                                        <li>搜索引擎</li>
-                                        <li>web前后端开发</li>
-                                        <li>IOS开发</li>
-                                    </ul>
-                                    <h3>其他兴趣：</h3>
-                                    <hr>
-                                    <ul>
-                                        <li>语言：英语，日语</li>
-                                        <li>历史迷，特别二战史，欧洲史，罗马史，日本战国史</li>
-                                        <li>对社会科学也有些想象</li>
-                                    </ul>
-                                    <h3>格言：</h3>
-                                    <hr>
-                                    <blockquote>
-                                        <p></p>
-                                        <p>也许多少年后在某个地方，</p>
-                                        <p>我将轻声叹息将往事回顾：</p>
-                                        <p>一片树林里分出两条路——</p>
-                                        <p>而我选择了人迹更少的一条，</p>
-                                        <p>从此决定了我一生的道路。</p>
-                                        <p class="text-right"><em>——Robert Frost 《The Road Not Taken》</em></p>
-                                    </blockquote>
-                                    <hr>
-                                    <p>我想感谢 <strong>BIG SEAN,KANYE WEST</strong><strong>和 JUSTIN BIEBER,ONEREPUBLIC,COLDPLAY </strong>，感谢他们的歌曲陪伴了我走过一个个敲键盘的夜晚。</p>
-                                    <img src="http://7xlen8.com1.z0.glb.clouddn.com/kanye3.jpg" alt="pic" class="img-responsive">
-                                    <hr>
-                                    <p class="lead">这是我的个人网站，如果你觉得它很有趣，或者内容对你很有帮助，可以qq联系我，请我喝杯茶。</p> 
-                                    <hr>
-                                </div>
+                                <br>
+                                <h5>感谢</h5>
                                 <hr>
-                                <br>
-                                <br>
-                            </div>
-                        </div>
-                    </article>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p><b class="mr-1" style="font-size: 18px">感谢</b>慷慨解囊的朋友，包括但不限于:</p>
+                                        <ul>
+                                            <li><h6>大白兔123</h6></li>
+                                        </ul>                                    
+                                    </div>
+                                    <div class="col-lg-6 col-md-4">
+                                        <br />
+                                        <br />
+                                        <blockquote align="right" class="text-muted font-italic" style="opacity:0.7">
+                                            <h6>瀑布的水逆流而上</h6>
+                                            <h6>蒲公英种子从远处飘回，聚成伞的模样</h6>
+                                            <h6>太阳从西边升起，落向东方</h6>
+                                            <br />
+
+                                            <h6>子弹退回枪膛</h6>
+                                            <h6>运动员回到起跑线上</h6>
+                                            <h6>我交回录取通知书，忘了十年寒窗</h6>
+                                            <br />
+
+                                            <h6>厨房飘来饭香</h6>
+                                            <h6>你把我的卷子签好名字</h6>
+                                            <h6>关掉电视，帮我把书包背上</h6>
+                                            <br />
+                                            <h6>你还在我身旁</h6>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                
+                            </div>                        
+                    
+                </div>
+                <div class="col col-lg-0">
                 </div>
             </div>
         </div>
-
-
     
 
 
@@ -167,18 +147,6 @@
         </footer>
     </div>
     <!-- /container -->
-
-
-    <script type="text/javascript">
-
-       $(function () {
-            parameters = ttc()
-            update_table(parameters)
-        });
-
-
-
-    </script>
 
 </body>
 </html>
