@@ -158,18 +158,21 @@
 	                title: '租房信息',
 	                align: 'left',
 	                formatter: function (value, row, index) {
-	                	var color = value.flag == '0'? '' : 'text-danger'
-	                    var e = '<a class="' + color + ' ' + 'target="_blank"  href="' + value.href + '">' + value.title + '</a>'
+	                	var color = value.flag == '0'? 'text-dark' : 'text-muted" style="opacity: 0.5'
+	                    var e = '<a class="' + color + ' " ' + 'target="_blank"  href="' + value.href + '">' + value.title + '</a>'
+	                    e = '<div>' + e + '</div>'
 	                    return e;
 	                }
 	            }, {
 	                field: 'post_time',
 	                title: '发布时间',
 	                align: 'center',
+	                width: '15%',
 	            }, {
 	                field: 'user',
 	                title: '是否中介(beta)',
 	                align: 'center',
+	                width: '10%',
 	                formatter: function (value, row, index) {
 	                	var color = value.flag == '0'? '' : 'bg-danger text-white'
 	                    var e = '<div class="' + color + ' ">' + value.u + '</div> '
@@ -178,7 +181,8 @@
 	            },{
 	                field: 'source',
 	                title: '来源',
-	                align: 'center'
+	                align: 'center',
+	                width: '8%'
 	            }],
 	        });
 		}
@@ -415,7 +419,7 @@
 			                    </div>
 			                </dd>
 
-			                <dt class="text-white bg-dark">过滤模式</dt>
+			                <dt class="text-white bg-dark">过滤净化模式</dt>
 			                <dd data-index="0">
 			                    <div class="option-list filter">
 			                        <a href="#" class="all on">关闭</a>
