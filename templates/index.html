@@ -38,7 +38,7 @@
 			<div class="navbar-collapse collapse order-3 dual-collapse2">
 		        <ul class="navbar-nav ml-auto">
 		            <li class="nav-item">
-		                <a class="nav-item nav-link active" href="/">关于</a>
+		                <a class="nav-item nav-link active" href="/about">关于</a>
 		            </li>
 		        </ul>
 		    </div>
@@ -167,22 +167,22 @@
 	                field: 'post_time',
 	                title: '发布时间',
 	                align: 'center',
-	                width: '15%',
+	                width: '14.8%',
 	            }, {
 	                field: 'user',
-	                title: '是否中介(beta)',
+	                title: '是否中介',
 	                align: 'center',
-	                width: '10%',
+	                width: '12%',
 	                formatter: function (value, row, index) {
 	                	var color = value.flag == '0'? '' : 'bg-danger text-white'
-	                    var e = '<div class="' + color + ' ">' + value.u + '</div> '
+	                    var e = '<p class="' + color + ' ">' + value.u + '</p> '
 	                    return e;
 	                }
 	            },{
 	                field: 'source',
 	                title: '来源',
 	                align: 'center',
-	                width: '8%'
+	                width: '10%'
 	            }],
 	        });
 		}
@@ -419,7 +419,7 @@
 			                    </div>
 			                </dd>
 
-			                <dt class="text-white bg-dark">过滤净化模式</dt>
+			                <dt class="text-white bg-dark">净化过滤模式</dt>
 			                <dd data-index="0">
 			                    <div class="option-list filter">
 			                        <a href="#" class="all on">关闭</a>
