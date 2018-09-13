@@ -24,10 +24,6 @@ c.execute(
     );
     ''')
 
-
-
-
-
 print "Table created successfully";
 conn.commit()
 conn.close()

@@ -117,7 +117,6 @@ def get_sub_options():
 
 @app.route('/jsondata', methods=['GET'])
 def jsondata():
-
     info = request.values
     limit = info.get('limit',  10)
     offset = info.get('offset', 0)
@@ -235,6 +234,43 @@ def jsondata():
     conn.close()
 
     return jsonify({'total': len(data), 'rows': data[int(offset):(int(offset) + int(limit))]})
+
+
+
+@app.route("/comment")
+def comment():
+    ip = str(request.remote_addr)
+    info = request.values
+
+    comment = 'c' + info.get('comment', '')
+
+    sqltext = '''
+        INSERT INTO COMMENTS (IP,COMMENT)
+        VALUES (?, ?);
+        '''
+
+    log.warning('[%s] says "%s"', ip, comment)
+
+    if len(comment) > 5:
+        conn = sqlite3.connect('db/test.db')
+        c = conn.cursor()
+        c.execute(sqltext, (ip, comment))
+        conn.commit()
+        conn.close()
+
+
+
+    return jsonify({'sucess': True})
+
+
+    # conn = sqlite3.connect('db/test.db')
+    # c = conn.cursor()
+    # c.execute(sqltext, (ip, comment))
+
+    # conn.commit()
+    # conn.close()
+
+
 
 
 if __name__ == '__main__':

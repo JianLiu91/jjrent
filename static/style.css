@@ -92,11 +92,11 @@
 
 
 
-@media (max-width: 768px) 
+@media (max-width: 1024px) 
   { 
     .float
     {
       float:right!important;
-      height:200px!important;
+      height:400px!important;
     } 
   }

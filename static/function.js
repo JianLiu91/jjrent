@@ -148,6 +148,24 @@ function ttc(){
 
 
         $(function(){
+
+            $("#comment-btn").click(function(e) {
+                $.ajax({
+                    url: '/comment',
+                    type: 'get',
+                    data: {
+                            'comment': $('#comment-area').val()
+                          },
+                    dataType: 'json',
+                    success: function(data) {
+                        $("#myModal").modal();
+                        $('#comment-area').val("")
+                    }
+                })
+
+            });
+
+
             $("#searchbtn").click(function(e) {
                 parameters = ttc()
                 parameters['search'] = $("#searchipt").val()

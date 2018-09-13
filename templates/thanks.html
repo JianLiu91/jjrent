@@ -4,16 +4,19 @@
      
                     <div class="col-md-auto" style="float: center">
                         <h3>感谢</h3>
-                        <hr>
+                        <hr />
                         <div class="row">
-                            <div class="col-xs-4 col-sm-4" style="height:300px">
+                            <div class="col-xs-6 col-sm-6 col-md-6" style="height:280px">
                                 <p>感谢慷慨解囊的朋友，其包含但不限于:</p>
                                 <ul>
                                     <li><h6>白兔123</h6></li>
                                 </ul> 
                             </div>
 
-                            <div class="col-xs-8 col-sm-8 float" style="height:300px">
+                            <div class="col-xs-6 col-sm-6 col-md-6 float" style="height:200px">
+                                <br />
+                                <br />
+                                <br />
                                 <br />
                                 <br />
                                 <blockquote align="right" class="text-muted font-italic" style="opacity:0.7">
@@ -36,8 +39,14 @@
                             </div>
 
 
-                            <div class="col-xs-4 col-sm-4" style="height:100px">
-                            CCC
+                            <div class="col-xs-6 col-sm-6 col-md-6" style="height:165px">
+                                <hr />
+                                <div class="form-group">
+                                    <label for="exampleTextarea"><e style="font-size: 14px">给静妮建议:</e></label>
+                                    <textarea id="comment-area" placeholder="此处填写留言" class="form-control" rows="3" style="width:100%; background: transparent; line-height: 20px; font-size: 16px; transition: none;"></textarea>
+                                    <button type="button" id="comment-btn" class="mt-1 btn btn-outline-secondary btn-sm" style="float:right">提交</button>
+
+                                </div>
                             </div>
 
                         </div>
@@ -45,3 +54,29 @@
                 </div>
             </div>
         </div> 
+
+
+        <!-- The Modal -->
+      <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+          
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h6 class="modal-title">感谢</h6>
+              <button type="button" class="close btn-sm" data-dismiss="modal">×</button>
+            </div>
+            
+            <!-- Modal body -->
+            <div class="modal-body">
+              已经收到您的反馈
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+        <script type="text/javascript" src="static/function.js">
+
+        </script>
