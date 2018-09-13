@@ -89,3 +89,14 @@
   color: black;
   border: 1px solid #dee2e6;
 }
+
+
+
+@media (max-width: 768px) 
+  { 
+    .float
+    {
+      float:right!important;
+      height:200px!important;
+    } 
+  }
