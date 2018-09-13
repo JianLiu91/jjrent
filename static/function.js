@@ -135,7 +135,7 @@ function ttc(){
 
                     //<a class="allsub on" href="#" id="0">不限</a>
 
-                    for (var i = data['data'].length - 1; i >= 0; i--) {
+                    for (var i = 0; i < data['data'].length; i++) {
                         var a=document.createElement("a");
                         a.innerText = data['data'][i];
                         a.href = '#';

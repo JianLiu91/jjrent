@@ -2,69 +2,30 @@
 
 <html lang="en">
 
-<head>
-	<title>静妮找房</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="RyanRent">
-	
-	<link rel="stylesheet" href="static/bootstrap.min.css">
-	<script src="static/jquery-3.1.1.min.js"></script>
-	<script src="static/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-	<script src="static/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> 
+{% include 'pre_head.html' %}
 
-	<!-- boostrap table -->
-	<link rel="stylesheet" href="static/bootstrap-table.min.css">
-	<script src="static/bootstrap-table.min.js"></script>
-	<script src="static/bootstrap-table-zh-CN.min.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="static/style.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> 
-</head>
 <body>
-    <header>
-		<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: black;">
-		  <div class="container">
-		    <a class="navbar-brand" href="/"><img src="static/my.png" width="35" height="35" class="d-inline-block mr-sm-1" alt="" >静妮找房</a>
+	{% include 'header.html' %}
 
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav">
-					<a class="nav-item nav-link active" href="/">首页 <span class="sr-only">(homepage)</span></a>
-				</div>
-				<ul class="navbar-nav ml-auto">
-		            <li class="nav-item">
-		                <a class="nav-item nav-link active" href="/about">关于</a>
-		            </li>
-		        </ul>
-			</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	    <div class="container">
 
-		  </div>
-		</nav>
+	      <div class="form-inline">
+		    <input id='searchipt' class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
+		    <button id="searchbtn" class="btn btn-success">搜索</button>
+	      </div>
 
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		    <div class="container">
-
-		      <div class="form-inline">
-			    <input id='searchipt' class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
-			    <button id="searchbtn" class="btn btn-success">搜索</button>
-		      </div>
-
-		    </div>
-		</nav>
-    </header>
+	    </div>
+	</nav>
+    
 
   	<div class="bg-light">
 	  	<div class="container bg-light">
+		  <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
+			    <a class="nav-item mynav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
+			    <a class="nav-item mynav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
 
-		<!--	<nav class="border-top-0"> -->
-			  <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
-				    <a class="nav-item mynav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
-				    <a class="nav-item mynav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
-
-			  </div>
+		  </div>
 		</div>
 	</div>
 
@@ -72,29 +33,16 @@
 
 	</script>
 
-	<div id="layerd" style="position: fixed; top: 65px; right: 2px; line-height: 2px; z-index: 1000; width: 12%; height: 30%;">
-        <div id='QRCode'>
-            <div>
-                <h6 class="text-muted" align="center">
-                    静妮接受您的捐赠
-                    <i class="fa fa-heart"></i>
-                </h6>
-                    
-                    <div class="col">
-                        <div align="center"><img src="static/ali.png" style="height:120px;width:120px;display:block;text-align:center" align="center">
-                        </div>
-                        <h5></h5>
-                    </div>
-                    <div class="col mt-2">
-                        <div align="center"><img src="static/wx.png" style="height:120px;width:120px;display:block;text-align:center" align="center">
-                        </div>
-                    </div>
+	<script type="text/javascript">
 
-            </div>
-        </div>   
-    </div>
+	   $(function () {
+	        parameters = ttc()
+	        update_table(parameters)
+	    });
 
+	</script>
 
+	{% include 'qrcode.html' %}
 
 	<div class="container">
 			<div class="tab-content border-right border-left" id="nav-tabContent">
@@ -219,26 +167,7 @@
 	</div>  <!-- contrainer -->
 
 
-	<div class="container">
-		<hr />
-		<footer>
-			<div style="width:100%">
-				<span class="font-weight-light" style="float:left;font-size:15px">总:{{ sta.tip }} IP, {{ sta.tpv }} PV | 今:{{ sta.dip }} IP, {{ sta.dpv }} PV </span>
-				<span class="font-weight-light" style="float:right;font-size:15px">&copy; Ryan 2016</span>
-			</div>
-		</footer>
-	</div>
-	<!-- /container -->
-
-
-	<script type="text/javascript">
-
-	   $(function () {
-	        parameters = ttc()
-	        update_table(parameters)
-	    });
-
-	</script>
+	{% include 'footer.html' %}
 
 </body>
 </html>
