@@ -9,7 +9,7 @@ def getlnglat(address):
     output = 'json'
 
     ak = '29DpqLeOW2EpyvmjXmTGKarM'
-    ak = '6f402df225eac8d88e0066ec2a1a457f'
+    #ak = '6f402df225eac8d88e0066ec2a1a457f'
 
 
     #add = quote(address)
@@ -24,16 +24,81 @@ def getlnglat(address):
     confidence = temp['result']['confidence']
     return lat, lng
 
-#fileo = open('output.txt', 'w')
+def area():
+    result ={}
+    for line in open('area.txt'):
+        key, value = line.strip().split(':')
+        value = value.split(' ')
+        result[key] = value
+    return result
 
-with open('xiaoqu_all.txt') as filein:
-    for line in filein:
-        add = line.strip().split('\t')[2]
+def subway():
+    result ={}
+    for line in open('subway.txt'):
+        key, value = line.strip().split(':')
+        key, value = key.strip(), value.strip()
+        value = value.split(' ')
+        result[key] = value
+    return result 
+
+def xiaoqu():
+    result = []
+    for line in open('xiaoqu_all.txt'):
+        fields = line.strip().split('\t')
+        large, small, opt = fields[0], fields[1], fields[2]
+        result.append([large, opt])
+    return result
+
+
+if __name__ == '__main__':
+    # # for area
+    # area = area()
+    # for key in area:
+    #     if key != '不限':
+    #         for elem in area[key]:
+    #             add = '北京市'+key+'区'+elem
+    #             try:
+    #                 lat, lng = getlnglat(add)
+    #             except:
+    #                 lat = -1; lng = -1
+    #             print '\t'.join([elem, str(lat), str(lng)])
+
+    # for subway
+    # subway = subway()
+    # for key in subway:
+    #     if key != '不限':
+    #         for elem in subway[key]:
+    #             add = '北京市'+key+elem+'地铁站'
+    #             try:
+    #                 lat, lng = getlnglat(add)
+    #             except:
+    #                 lat = -1; lng = -1
+    #             print '\t'.join([elem, str(lat), str(lng)])
+
+
+    # for beijing xiaoqu
+    # xiaoqu = xiaoqu()
+    # for xq in xiaoqu:
+    #     a, b = xq
+    #     add = '北京市'+a+'区'+b
+    #     try:
+    #         lat, lng = getlnglat(add)
+    #     except:
+    #         lat = -1; lng = -1
+    #     print '\t'.join([b, str(lat), str(lng)])
+
+    # for xianghe yanjiao xiaoqu
+    xiaoqu = xiaoqu()[7977:]
+    for xq in xiaoqu:
+        a, b = xq
+        add = a + b
         try:
             lat, lng = getlnglat(add)
         except:
             lat = -1; lng = -1
-        print '\t'.join([add, str(lat), str(lng)])
-        #print>>fileo, '\t'.join([add, str(lat), str(lng)])
+        print '\t'.join([b, str(lat), str(lng)])
+
+
+
 
 #fileo.close()
