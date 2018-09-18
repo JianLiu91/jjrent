@@ -259,41 +259,15 @@ def comment():
         conn.commit()
         conn.close()
 
-
-
     return jsonify({'sucess': True})
 
 
-    # conn = sqlite3.connect('db/test.db')
-    # c = conn.cursor()
-    # c.execute(sqltext, (ip, comment))
-
-    # conn.commit()
-    # conn.close()
-
-# about
-@app.route("/map")
-def map():
-    return render_template('map.html')
-
-def f(xqzb):
-    conn = sqlite3.connect('db/test.db')
-    c = conn.cursor()
-    c.execute("SELECT Count(*) FROM HOUSE WHERE TITLE GLOB '*%s*'" % xqzb[0])   
-    rows = c.fetchall()[0][0]
-    conn.close()
-    if rows != 0:
-        return list(xqzb)+[rows]
-    return 0
-
 @app.route("/xiaoquzuobiao")
 def xiaoquzb():
-    # pool = Pool(processes=1)
-    # result = pool.map(f, xiaoquzuobiao)
-    result = [f(xqzb) for xqzb in xiaoquzuobiao]
-    result = filter(lambda x: x!=0, result)
-    
-
+    conn = sqlite3.connect('db/test.db')
+    c = conn.cursor()
+    sqlscript = "SELECT * from  XIAOQUGPS"
+    result = c.execute(sqlscript).fetchall()
     return jsonify({'data': result})
 
 
