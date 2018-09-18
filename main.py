@@ -146,7 +146,7 @@ def jsondata():
             sub_xiaoqu = [" TITLE GLOB '*%s*' " % t for t in xiaoqu[search]]
             all_sub += sub_xiaoqu
         except Exception, e:
-            print '1', e
+            log.warning(e)
 
         sqlscript += " or ".join(all_sub) + ' ) '
 
@@ -233,7 +233,7 @@ def jsondata():
         data.append(d)
     
     conn.close()
-
+    print sqlscript
     return jsonify({'total': len(data), 'rows': data[int(offset):(int(offset) + int(limit))]})
 
 
