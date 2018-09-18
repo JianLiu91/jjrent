@@ -8,7 +8,7 @@ from flask import Flask
 from flask import render_template, jsonify, request
 
 from random import choice
-from scripts.util import area, subway, xiaoqu
+from scripts.util import area, subway, xiaoqu, xiaoquzuobiao
 
 
 logFile = 'web.log'
@@ -34,6 +34,7 @@ log.addHandler(stream_handler)
 area = area()
 subway = subway()
 xiaoqu = xiaoqu()
+xiaoquzuobiao = xiaoquzuobiao()
 
 app = Flask(__name__)
 
@@ -133,7 +134,7 @@ def jsondata():
     search = info.get('search', '')
 
     ip = request.remote_addr
-    log.warning('[%s] %s ["%s" %s %s %s %s %s %s %s]', str(ip), 'is searching...', search, m_area, m_subway, suboption, zffs, jushi, filr, tag)
+    log.warning('[%s] %s ["%s" %s %s %s %s %s %s %s %s]', str(ip), 'is searching...', search, method, m_area, m_subway, suboption, zffs, jushi, filr, tag)
 
     sqlscript = ' '
 
@@ -145,7 +146,7 @@ def jsondata():
             sub_xiaoqu = [" TITLE GLOB '*%s*' " % t for t in xiaoqu[search]]
             all_sub += sub_xiaoqu
         except Exception, e:
-            print e
+            print '1', e
 
         sqlscript += " or ".join(all_sub) + ' ) '
 
@@ -157,7 +158,7 @@ def jsondata():
             sub_xiaoqu = [" TITLE GLOB '*%s*'" % t for t in xiaoqu[suboption]]
             all_sub += sub_xiaoqu
         except Exception, e:
-            print e
+            print '2', e
         sqlscript += " or ".join(all_sub) + ' ) '
     
     elif m_area != u'不限':
@@ -270,6 +271,24 @@ def comment():
     # conn.commit()
     # conn.close()
 
+# about
+@app.route("/map")
+def map():
+    return render_template('map.html')
+
+
+@app.route("/xiaoquzuobiao")
+def xiaoquzb():
+    conn = sqlite3.connect('db/test.db')
+    c = conn.cursor()
+    result = []
+    for xqzb in xiaoquzuobiao:
+        c.execute("SELECT Count(*) FROM HOUSE WHERE TITLE GLOB '*%s*'" % xqzb[0])
+        rows = c.fetchall()[0][0]
+        if rows != 0:
+            result.append(list(xqzb)+[rows])
+    print result[0]
+    return jsonify({'data': result})
 
 
 

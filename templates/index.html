@@ -23,7 +23,10 @@
 	  	<div class="container bg-light">
 		  <div class="nav nav-tabs bg-light" id="nav-tab" role="tablist">
 			    <a class="nav-item mynav-item nav-link active text-dark method" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">区域找房</a>
+
 			    <a class="nav-item mynav-item nav-link text-dark method" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">地铁找房</a>
+
+			    <a class="nav-item mynav-item nav-link text-dark method" id="nav-map-tab" data-toggle="tab" href="#nav-map" role="tab" aria-controls="nav-map" aria-selected="false">地图找房</a>
 
 		  </div>
 		</div>
@@ -111,54 +114,61 @@
 					</div>
 				</div>
 
+				<div class="tab-pane" id="nav-map" role="tabpanel" aria-labelledby="nav-map-tab">
+					<div class="card-body" style="padding:1.25rem 1.25rem 0px;">
+						{% include 'map.html' %}
+					</div>
+				</div>
+
 
 				<div class="card-body border-bottom" style="margin-bottom: 10px; padding:0px 1.25rem 0.25rem;">
-		  			<div class="bd" id="filter-options">
-							<div class="sub-option-list" id="line-sub-list" style="display: none; width:100%">
-		                        
-		               		</div>
+					<div id='addinfo'>
+			  			<div class="bd" id="filter-options">
+								<div class="sub-option-list" id="line-sub-list" style="display: none; width:100%">
+			               		</div>
 
-			            <dl class="dl-lst clear">
-			            	<dt>来源：</dt>
-			                <dd data-index="0">
-			                    <div class="option-list tag">
-			                        <a href="#" class="all on">不限</a>
-			                        <a href="#">水木</a>
-			                        <a href="#">豆瓣</a>
-			                        <span class="badge badge-light" style="font-size: 11px">(建议优先水木)</span>
-			                    </div>
-			                </dd>
+				            <dl class="dl-lst clear">
+				            	<dt>来源：</dt>
+				                <dd data-index="0">
+				                    <div class="option-list tag">
+				                        <a href="#" class="all on">不限</a>
+				                        <a href="#">水木</a>
+				                        <a href="#">豆瓣</a>
+				                        <span class="badge badge-light" style="font-size: 11px">(建议优先水木)</span>
+				                    </div>
+				                </dd>
 
-			                <dt>方式：</dt>
-			                <dd data-index="0">
-			                    <div class="option-list zffs">
-			                        <a href="#" class="all on">不限</a>
-			                        <a href="#">求租</a>
-			                        <a href="#">整租</a>
-			                    </div>
-			                </dd>
+				                <dt>方式：</dt>
+				                <dd data-index="0">
+				                    <div class="option-list zffs">
+				                        <a href="#" class="all on">不限</a>
+				                        <a href="#">求租</a>
+				                        <a href="#">整租</a>
+				                    </div>
+				                </dd>
 
-			                <dt>居室：</dt>
-			                <dd data-index="0">
-			                    <div class="option-list jushi">
-			                        <a href="#" class="all on">不限</a>
-			                        <a href="#">1居</a>
-			                        <a href="#">2居</a>
-			                        <a href="#">3居</a>
-			                    </div>
-			                </dd>
+				                <dt>居室：</dt>
+				                <dd data-index="0">
+				                    <div class="option-list jushi">
+				                        <a href="#" class="all on">不限</a>
+				                        <a href="#">1居</a>
+				                        <a href="#">2居</a>
+				                        <a href="#">3居</a>
+				                    </div>
+				                </dd>
 
-			                <dt><span class="badge badge-primary" style="font-size: 14px">净化模式：</span></dt>
-			                <dd data-index="0">
-			                    <div class="option-list filter">
-			                        <a href="#" class="all on">关闭</a>
-			                        <a href="#">开启</a>
-			                        <span class="badge badge-light" style="font-size: 11px">(建议开启)</span>
-			                    </div>
-			                </dd>
+				                <dt><span class="badge badge-primary" style="font-size: 14px">净化模式：</span></dt>
+				                <dd data-index="0">
+				                    <div class="option-list filter">
+				                        <a href="#" class="all on">关闭</a>
+				                        <a href="#">开启</a>
+				                        <span class="badge badge-light" style="font-size: 11px">(建议开启)</span>
+				                    </div>
+				                </dd>
 
-			            </dl>
-			        </div>
+				            </dl>
+				        </div>
+			    	</div>
 			    </div>
 			</div>
 

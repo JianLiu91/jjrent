@@ -181,11 +181,16 @@ function ttc(){
                 $("#line-sub-list a").removeClass('on');
                 $('.allsub').addClass('on');
                 $('#line-sub-list').hide()
+                $('#addinfo').show()
 
                 parameters = ttc()
                 parameters['method'] = e.target.innerHTML;
                 $("#table").bootstrapTable('destroy');
                 update_table(parameters)
+            });
+
+            $("#nav-map-tab").click(function() {
+                $('#addinfo').hide();
             });
 
             $(".area.option-list a").click(function(e) {

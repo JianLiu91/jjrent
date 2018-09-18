@@ -30,3 +30,12 @@ def xiaoqu():
         result[large].add(opt)
         result[small].add(opt)
     return result
+
+
+def xiaoquzuobiao():
+    result = []
+    for line in open('resources/xiaoqu_zuobiao.txt'):
+        fields = line.strip().split('\t')
+        add, lat, lon = fields[0], fields[1], fields[2]
+        result.append((add, lat, lon))
+    return result
