@@ -288,8 +288,9 @@ def f(xqzb):
 
 @app.route("/xiaoquzuobiao")
 def xiaoquzb():
-    pool = Pool(processes=25)
-    result = pool.map(f, xiaoquzuobiao)
+    # pool = Pool(processes=1)
+    # result = pool.map(f, xiaoquzuobiao)
+    result = [f(xqzb) for xqzb in xiaoquzuobiao]
     result = filter(lambda x: x!=0, result)
     
 
