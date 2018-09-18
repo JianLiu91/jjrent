@@ -3,6 +3,7 @@
 import logging
 import sqlite3
 import datetime
+from multiprocessing import Pool
 
 from flask import Flask
 from flask import render_template, jsonify, request
@@ -233,7 +234,6 @@ def jsondata():
         data.append(d)
     
     conn.close()
-    print sqlscript
     return jsonify({'total': len(data), 'rows': data[int(offset):(int(offset) + int(limit))]})
 
 
@@ -276,18 +276,23 @@ def comment():
 def map():
     return render_template('map.html')
 
+def f(xqzb):
+    conn = sqlite3.connect('db/test.db')
+    c = conn.cursor()
+    c.execute("SELECT Count(*) FROM HOUSE WHERE TITLE GLOB '*%s*'" % xqzb[0])   
+    rows = c.fetchall()[0][0]
+    conn.close()
+    if rows != 0:
+        return list(xqzb)+[rows]
+    return 0
 
 @app.route("/xiaoquzuobiao")
 def xiaoquzb():
-    conn = sqlite3.connect('db/test.db')
-    c = conn.cursor()
-    result = []
-    for xqzb in xiaoquzuobiao:
-        c.execute("SELECT Count(*) FROM HOUSE WHERE TITLE GLOB '*%s*'" % xqzb[0])
-        rows = c.fetchall()[0][0]
-        if rows != 0:
-            result.append(list(xqzb)+[rows])
-    print result[0]
+    pool = Pool(processes=25)
+    result = pool.map(f, xiaoquzuobiao)
+    result = filter(lambda x: x!=0, result)
+    
+
     return jsonify({'data': result})
 
 
