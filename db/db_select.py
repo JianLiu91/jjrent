@@ -6,7 +6,7 @@ conn = sqlite3.connect('test.db')
 print "Opened database successfully";
 c = conn.cursor()
 
-sqlscript = "SELECT * from  XIAOQUGPS"
+sqlscript = "SELECT * FROM HOUSE ORDER BY POST_TIME DESC;"
 cursor = c.execute(sqlscript).fetchall()
 
 print cursor

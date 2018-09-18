@@ -162,7 +162,6 @@ function ttc(){
                         $('#comment-area').val("")
                     }
                 })
-
             });
 
 
@@ -202,7 +201,7 @@ function ttc(){
                  },100);
 
             });
-            
+
 
             $(".area.option-list a").click(function(e) {
                 $("#searchipt").val('')

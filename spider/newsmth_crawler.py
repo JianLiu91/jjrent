@@ -34,6 +34,7 @@ def crawl(url):
             a = diva.find('a')
             user = a.text
             post_time = a.next_sibling[1:]
+            post_time = "".join(post_time.split())
             post_time = post_time + ' 23:59:00' if post_time[2] != ':' else '-'.join([year, month, day]) + ' %s' % post_time
             post_time = transfer_post_time(post_time)
 
