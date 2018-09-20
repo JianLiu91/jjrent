@@ -104,6 +104,7 @@ function ttc(){
                     title: '发布时间',
                     align: 'center',
                     width: '10%',
+                    cardVisible: false
                 }, {
                     field: 'source',
                     title: '来源',
