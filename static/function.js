@@ -82,6 +82,7 @@ function ttc(){
                     field: 'title',
                     title: '租房信息',
                     align: 'left',
+                    width: '68%',
                     formatter: function (value, row, index) {
                         var color = value.flag == '0'? 'text-dark' : '"text-danger"'
                         var e = '<a class=' + color + ' ' + 'target="_blank"  href="' + value.href + '">' + value.title + '</a>'
@@ -89,21 +90,21 @@ function ttc(){
                         return e;
                     }
                 }, {
-                    field: 'post_time',
-                    title: '发布时间',
-                    align: 'center',
-                    width: '14.8%',
-                }, {
                     field: 'user',
-                    title: '是否中介',
+                    title: '用户过滤',
                     align: 'center',
-                    width: '12%',
+                    width: '10%',
                     formatter: function (value, row, index) {
                         var color = value.flag == '0'? '' : 'bg-dark text-white'
                         var e = '<div class="' + color + ' ">' + value.u + '</div> '
                         return e;
                     }
-                },{
+                }, {
+                    field: 'post_time',
+                    title: '发布时间',
+                    align: 'center',
+                    width: '10%',
+                }, {
                     field: 'source',
                     title: '来源',
                     align: 'center',
@@ -180,7 +181,7 @@ function ttc(){
                 $("#line-sub-list a").removeClass('on');
                 $('.allsub').addClass('on');
                 $('#line-sub-list').hide()
-                $('#addinfo').show()
+                $('.addinfo').show()
 
                 parameters = ttc()
                 parameters['method'] = e.target.innerHTML;
@@ -189,7 +190,7 @@ function ttc(){
             });
 
             $("#nav-map-tab").click(function() {
-                $('#addinfo').hide();
+                $('.addinfo').hide();
                 setTimeout(function(){
                     var point={
                         lng:116.405706,

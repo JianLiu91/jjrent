@@ -230,7 +230,7 @@ def jsondata():
             row[0], 
             {'href':row[1], 'title': row[2][:40], 'flag': row[6]}, 
             {'u':row[3], 'flag': row[6]}, 
-            row[4])
+            row[4].split()[0])
         data.append(d)
     
     conn.close()
