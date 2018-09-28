@@ -2,3 +2,4 @@
 web.log
 db/test.db
 spider/*.log
+db/mongodb/*
