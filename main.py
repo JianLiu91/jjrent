@@ -177,7 +177,7 @@ def jsondata():
         all_subway = ["TITLE GLOB '*%s*'" % t for t in subway[m_subway]]
         for elem in subway[m_subway]:
             try:
-                all_subway += ["TITLE GLOB '*%s*'" % t for t in xiaoqu[elem]]
+                all_subway += ["TITLE GLOB '*%s*'" % t for t in xiaoqu[elem]][:100]
             except Exception, e:
                 pass
         sql_area = " or ".join(all_subway)
