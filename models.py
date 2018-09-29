@@ -83,7 +83,7 @@ def process_sqlite(limit, offset, method, m_area, m_subway,
             sub_xiaoqu = [" TITLE GLOB '*%s*' " % t for t in xiaoqu[search]]
             all_sub += sub_xiaoqu
         except Exception, e:
-            log.warning(e)
+            pass
 
         sqlscript += " or ".join(all_sub) + ' ) '
 
