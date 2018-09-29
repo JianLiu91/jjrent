@@ -4,8 +4,9 @@ import requests
 import datetime
 import time
 import logging
-
 import sqlite3
+
+from db_utils import get_db
 
 logging.basicConfig(filename='z_newsmth.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
@@ -14,6 +15,39 @@ def transfer_post_time(post_time):
     if len(fields[1]) == 1:
         fields[1] = '0' + fields[1]
     return '-'.join(fields)
+
+
+def update_sqlite(div_url, div_txt, user, post_time, nowTime):
+    conn = sqlite3.connect('../db/test.db')
+    c = conn.cursor()
+    sqltext = '''
+        INSERT OR IGNORE INTO HOUSE (SOURCE,URL,TITLE,USER,POST_TIME,CRAWL_TIME)
+        VALUES ('newsmth', '%s', '%s', '%s', '%s', '%s');
+        UPDATE HOUSE SET POST_TIME='%s' WHERE TITLE='%s';
+        ''' % (div_url, div_txt, user, post_time, nowTime, post_time, div_txt)
+    c.executescript(sqltext)
+    conn.commit()
+    conn.close()
+
+
+def update_mongo(div_url, div_txt, user, post_time, nowTime):
+    db = get_db()
+    rent_col = db.rent
+
+    post_time = datetime.datetime.strptime(post_time, '%Y-%m-%d %H:%M:%S')
+    nowTime = datetime.datetime.strptime(nowTime, '%Y-%m-%d %H:%M:%S')
+
+    item = {
+        'source': 'newsmth',
+        'url': div_url,
+        'title': div_txt,
+        'user': user,
+        'post_time': post_time,
+        'crawl_time': nowTime
+    }
+    
+    rent_col.update({'title':div_txt}, {"$set": item}, upsert=True)
+
 
 def crawl(url):
     pre_fix = 'http://www.newsmth.net/nForum/#!'
@@ -46,22 +80,11 @@ def crawl(url):
                 or len(div_txt) < 4
                 ):
                 continue
-
-            conn = sqlite3.connect('../db/test.db')
-            c = conn.cursor()
             try:
-                sqltext = '''
-                    INSERT OR IGNORE INTO HOUSE (SOURCE,URL,TITLE,USER,POST_TIME,CRAWL_TIME)
-                    VALUES ('newsmth', '%s', '%s', '%s', '%s', '%s');
-                    UPDATE HOUSE SET POST_TIME='%s' WHERE TITLE='%s';
-                    ''' % (div_url, div_txt, user, post_time, nowTime, post_time, div_txt)
-                c.executescript(sqltext)
-                conn.commit()
+                update_sqlite(div_url, div_txt, user, post_time, nowTime)
+                update_mongo(div_url, div_txt, user, post_time, nowTime)
             except:
                 pass
-
-            conn.close()
-
 
 if __name__ == '__main__':
     

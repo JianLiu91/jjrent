@@ -1,4 +1,6 @@
 # -*- coding: utf8
+import logging
+import sqlite3
 
 def area():
     result ={}
@@ -39,3 +41,7 @@ def xiaoquzuobiao():
         add, lat, lon = fields[0], fields[1], fields[2]
         result.append((add, lat, lon))
     return result
+
+area = area()
+subway = subway()
+xiaoqu = xiaoqu()

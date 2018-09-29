@@ -6,7 +6,10 @@ import logging
 
 from bs4 import BeautifulSoup
 from time import gmtime, strftime
+
 from proxy import get_proxies4 as get_proxies
+from db_utils import get_db
+
 
 logging.basicConfig(filename='z_douban.log', format='%(asctime)s - %(message)s', level=logging.WARNING)
 
@@ -15,6 +18,39 @@ headers = {
     'cookie': '',
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'
     }
+
+
+def update_sqlite(url, title, user_id, tm, nowTime):
+    conn = sqlite3.connect('../db/test.db')
+    c = conn.cursor()
+    sqltext = '''
+        INSERT OR IGNORE INTO HOUSE (SOURCE,URL,TITLE,USER,POST_TIME,CRAWL_TIME)
+        VALUES ('douban', '%s', '%s', '%s', '%s', '%s');
+        UPDATE HOUSE SET POST_TIME='%s' WHERE TITLE='%s';
+        ''' % (url, title, user_id, tm, nowTime, tm, title)
+    c.executescript(sqltext)
+    conn.commit()
+    conn.close()
+
+
+def update_mongo(url, title, user_id, tm, nowTime):
+    db = get_db()
+    rent_col = db.rent
+
+    tm = datetime.datetime.strptime(tm, '%Y-%m-%d %H:%M:%S')
+    nowTime = datetime.datetime.strptime(nowTime, '%Y-%m-%d %H:%M:%S')
+
+    item = {
+        'source': 'douban',
+        'url': url,
+        'title': title,
+        'user': user_id,
+        'post_time': tm,
+        'crawl_time': nowTime
+    }
+    
+    rent_col.update({'title':title}, {"$set": item}, upsert=True)
+
 
 
 def crawl(url, proxies):
@@ -39,20 +75,12 @@ def crawl(url, proxies):
         tm = ('%s-%s:00' % (year, tm))
 
         nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-        conn = sqlite3.connect('../db/test.db')
-        c = conn.cursor()
         try:
-            sqltext = '''
-                INSERT OR IGNORE INTO HOUSE (SOURCE,URL,TITLE,USER,POST_TIME,CRAWL_TIME)
-                VALUES ('douban', '%s', '%s', '%s', '%s', '%s');
-                UPDATE HOUSE SET POST_TIME='%s' WHERE TITLE='%s';
-                ''' % (url, title, user_id, tm, nowTime, tm, title)
-            c.executescript(sqltext)
+            update_sqlite(url, title, user_id, tm, nowTime)
+            update_mongo(url, title, user_id, tm, nowTime)
         except:
             pass
-        conn.commit()
-        conn.close()
+
     return True
 
 
@@ -62,13 +90,13 @@ if __name__ == '__main__':
         'https://www.douban.com/group/beijingzufang/discussion?start=',
         'https://www.douban.com/group/26926/discussion?start=',
         'https://www.douban.com/group/279962/discussion?start='
-        #'https://www.douban.com/group/zhufang/discussion?start=',
+        'https://www.douban.com/group/zhufang/discussion?start=',
         #'https://www.douban.com/group/sweethome/discussion?start=',
         #'https://www.douban.com/group/opking/discussion?start=',
         #'https://www.douban.com/group/257523/discussion?start='
     ]
 
-    proxy_list = [None] + get_proxies()['https']
+    proxy_list = [None] #+ get_proxies()['https']
     #proxy_list = get_proxies()['https']
     logging.warning('Get %s proxies', str(len(proxy_list)-1))
 

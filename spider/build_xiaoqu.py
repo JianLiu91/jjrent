@@ -1,13 +1,5 @@
 # -*- coding:utf8
-import requests
 import sqlite3
-import datetime
-import time
-import logging
-
-from bs4 import BeautifulSoup
-from time import gmtime, strftime
-from proxy import get_proxies4 as get_proxies
 
 def xiaoquzuobiao():
     result = []
