@@ -1,30 +1,14 @@
 # -*- coding: utf8
+import pymongo
+from pymongo import MongoClient
 
-import sqlite3
-from scripts.util import area, subway, xiaoqu
+def get_db():
+    client = MongoClient('mongodb://ryan:8325357@localhost:27017/house')
+    return client.house
 
-area = area()
-subway = subway()
-xiaoqu = xiaoqu()
+if __name__ == '__main__':
+    db = get_db()
+    rent_col = db.rent
 
-conn = sqlite3.connect('db/test.db')
-print "Opened database successfully";
-c = conn.cursor()
-
-sqlscript = 'SELECT * from HOUSE where 1=1 '
-
-m_area = u'东城'.encode('utf8')
-
-
-temp = ' and ( '
-#all_area = ["TITLE GLOB '*%s*'" % t for t in area[m_area]]
-all_area = []
-print ' '.join(["TITLE GLOB '*%s*'" % t for t in xiaoqu[m_area]][650:660])
-
-
-cursor = c.execute(sqlscript)  # or '*西城*'")
-for row in cursor:
-    print row[2]
-
-conn.commit()
-conn.close()
+    for x in rent_col.find({"title": { "$regex": '.*出租.*', "$options": "si" }}):
+        print x['title']
