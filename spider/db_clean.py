@@ -10,7 +10,7 @@ if __name__ == '__main__':
     #     SELECT * from HOUSE where CRAWL_TIME < (datetime('now','-10 day')) ORDER BY CRAWL_TIME DESC
     # '''
     sqltext = '''
-        DELETE from HOUSE where CRAWL_TIME < (datetime('now','-10 day'))
+        DELETE from HOUSE where CRAWL_TIME < (datetime('now','-15 day'))
     '''
 
     cursor = c.execute(sqltext)
