@@ -1,3 +1,4 @@
 0 * * * * /bin/sh /home/ryan/project/jjrent/spider/crawl_newsmth.sh
 30 * * * * /bin/sh /home/ryan/project/jjrent/spider/crawl_douban.sh
 15 * * * * /bin/sh /home/ryan/project/jjrent/spider/build_xiaoqu.sh
+20 1 * * * /bin/sh /home/ryan/project/jjrent/spider/db_clean.sh
