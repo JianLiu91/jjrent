@@ -14,6 +14,10 @@ def transfer_post_time(post_time):
     fields = post_time.split('-')
     if len(fields[1]) == 1:
         fields[1] = '0' + fields[1]
+
+    if len(fields[2]) == 1:
+        fields[2] = '0' + fields[2]
+
     return '-'.join(fields)
 
 
