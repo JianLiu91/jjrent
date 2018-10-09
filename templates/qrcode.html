@@ -2,22 +2,38 @@
         <div id='QRCode'>
             <div>
                 <h6 class="text-muted" align="center">
-                    欢迎您的捐赠
                     <i class="fa fa-heart"></i>
+                    捐赠
+                    <i class="fa fa-heart"></i>
+                    <button type="button" class="btn btn-success btn-sm donate">Donate</button>
                 </h6>
-                    
+                <div id="popper-content" style="display: none">
                     <div class="col">
-                        <div align="center"><img src="static/ali.png" style="height:120px;width:120px;display:block;text-align:center" align="center">
+                        <div align="center"><img src="static/ali.png" style="height:110px;width:110px;display:block;text-align:center" align="center">
                         </div>
-                        <h5></h5>
+                        <p align="center">alipay</p>
                         <h5></h5>
                         <h5></h5>
                     </div>
                     <div class="col mt-2">
-                        <div align="center"><img src="static/wx.png" style="height:120px;width:120px;display:block;text-align:center" align="center">
+                        <div align="center"><img src="static/wx.png" style="height:110px;width:110px;display:block;text-align:center" align="center">
                         </div>
+                        <p align="center">wechat</p>
                     </div>
+                </div>
 
             </div>
         </div>   
     </div>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+              $('.donate').popover({ 
+                html : true,
+                content: function() {
+                  return $('#popper-content').html();
+                }
+              });
+            });
+        </script>
+
