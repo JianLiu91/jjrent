@@ -18,7 +18,7 @@ c = conn.cursor()
 sqlscript = "SELECT * FROM COMMENTS"
 cursor = c.execute(sqlscript).fetchall()
 for elem in cursor:
-    print elem
+    print ' '.join(elem)
 
 # for elem in cursor:
 #     temp = ' '.join([x.strip() for x in  elem[4].split()])
