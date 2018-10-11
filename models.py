@@ -160,7 +160,7 @@ def process_sqlite(limit, offset, method, m_area, m_subway,
 
     all_user = ' ( %s UNION ALL %s ) ' %  (normal_user, cheat_user)
 
-    sqlscript = 'SELECT * from %s %s' % (all_user, 'ORDER BY POST_TIME DESC')
+    sqlscript = 'SELECT * from %s %s' % (all_user, 'ORDER BY date(POST_TIME) DESC, SOURCE DESC, random()')
 
     data = []
     conn = sqlite3.connect('db/test.db')
@@ -240,7 +240,7 @@ def process_mongo(mongo, limit, offset, method, m_area, m_subway,
         condition_list.append({'title': {'$regex': reg}})
 
     if filr == u'开启':
-        t = ' AND USER NOT IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 4) '
+        t = ' AND USER NOT IN (SELECT USER from HOUSE GROUP BY USER HAVING count(TITLE) >= 3) '
         sqlscript = sqlscript + t
 
     if tag != u'不限':

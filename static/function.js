@@ -61,7 +61,7 @@ function ttc(){
                 pagination: true, //前端处理分页
                 singleSelect: false,//是否只能单选
                 search: false, //显示搜索框，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-                striped: false, //是否显示行间隔色
+                striped: true, //是否显示行间隔色
                 cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pageNumber: 1, //初始化加载第10页，默认第一页
                 pageSize: 15, //每页的记录行数（*）
@@ -84,8 +84,10 @@ function ttc(){
                     align: 'left',
                     width: '68%',
                     formatter: function (value, row, index) {
-                        var color = value.flag == '0'? 'text-dark' : '"text-danger"'
-                        var e = '<a class=' + color + ' ' + 'target="_blank"  href="' + value.href + '">' + value.title + '</a>'
+                        var color = value.flag == '0'? 'class="text-primary"' : 'class="text-danger"'
+                        pre = value.flag == '0'? '' : '<S>'
+                        post = value.flag == '0'? '' : '</S>'
+                        var e = '<a ' + color + ' ' + 'target="_blank"  href="' + value.href + '">' + pre + value.title + post + '</a>'
                         e = '<div>' + e + '</div>'
                         return e;
                     }
@@ -95,8 +97,10 @@ function ttc(){
                     align: 'center',
                     width: '10%',
                     formatter: function (value, row, index) {
-                        var color = value.flag == '0'? '' : 'bg-dark text-white'
-                        var e = '<div class="' + color + ' ">' + value.u + '</div> '
+                        pre = value.flag == '0'? '' : '<del>'
+                        post = value.flag == '0'? '' : '</del>'
+                        var color = value.flag == '0'? '' : 'class="text-danger"'
+                        var e = '<div ' + color + ' >' + pre + value.u + post + '</div> '
                         return e;
                     }
                 }, {
