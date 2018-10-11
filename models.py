@@ -160,7 +160,7 @@ def process_sqlite(limit, offset, method, m_area, m_subway,
 
     all_user = ' ( %s UNION ALL %s ) ' %  (normal_user, cheat_user)
 
-    sqlscript = 'SELECT * from %s %s' % (all_user, 'ORDER BY date(POST_TIME) DESC, SOURCE DESC, random()')
+    sqlscript = 'SELECT * from %s %s' % (all_user, 'ORDER BY date(POST_TIME) DESC, SOURCE DESC, POST_TIME DESC')
 
     data = []
     conn = sqlite3.connect('db/test.db')
