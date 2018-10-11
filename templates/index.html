@@ -11,8 +11,8 @@
 	    <div class="container addinfo">
 
 	      <div class="form-inline">
-		    <input id='searchipt' class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
-		    <button id="searchbtn" class="btn btn-success">搜索</button>
+		    <input onkeydown="if(event.keyCode==13){Click()}" id='searchipt' class="form-control mr-sm-2 mb-sm-0" type="search" placeholder="输入区域、地铁站或小区名开始找房" aria-label="Search" style="width:380px">
+		    <button type="submit" id="searchbtn" class="btn btn-success">搜索</button>
 	      </div>
 
 	    </div>
@@ -42,6 +42,11 @@
 	        parameters = ttc()
 	        update_table(parameters)
 	    });
+
+		function Click(){
+			document.getElementById("searchbtn").click();   
+		    return false;  
+    	}	
 
 	</script>
 
