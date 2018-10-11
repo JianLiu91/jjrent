@@ -103,13 +103,13 @@ function ttc(){
                     field: 'post_time',
                     title: '发布时间',
                     align: 'center',
-                    width: '10%',
+                    width: '9%',
                     cardVisible: false
                 }, {
                     field: 'source',
                     title: '来源',
                     align: 'center',
-                    width: '10%'
+                    width: '8%'
                 }],
             });
         }
