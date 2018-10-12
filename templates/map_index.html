@@ -2,51 +2,23 @@
 <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
 <script type="text/javascript" src="static/MarkerClusterer.js"></script>
 
-<style>
-        #r-result {
-            width: 80%;
-            background: white;
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            z-index:6;
-            height: 40px;
-            line-height: 40px;
-            border-radius: 4px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            display: none
-        }
-        #r-result input {
-            border: none;
-            height: 40px;
-            background: none;
-            outline: none;
-            padding-left: 2%;
-            width: 96%; }
-</style>
 
-
-<div style="position: relative;">
-    <div id="r-result">
-        <input type="text" id="suggestId" placeholder="请输入地点"/>
-    </div>
-    <div id="map_show"></div>
+<div class="mt-1 mr-1" style="position: relative;">
+    <div id="index_map_show"></div>
 </div>
 
 
 
 
 <script>
-
-    var mymap = null;
-
+    var index_map = null;
     $.ajax({
             url: '/xiaoquzuobiao',
             type: 'get',
             dataType: 'json',
             success: function(data) {
-                var mapInclude = new AddMap("map_show", window.innerHeight / 2.5);
-                mymap = mapInclude.init("map_show",{lng:116.405706,lat:39.91582}, 12);
+                var mapInclude = new AddMap("index_map_show", $("#left_part").height()-10);
+                index_map = mapInclude.init("index_map_show",{lng:116.405706,lat:39.91582}, 14);
                 
                 var markers = [];
                 for (var i = data['data'].length - 1; i >= 0; i--) {
@@ -74,7 +46,6 @@
                     markers.push(marker);
                 }
                 var markerClusterer = new BMapLib.MarkerClusterer(mapInclude.m, {markers:markers});
-                $('#r-result').show()
             }
         })
 

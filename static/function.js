@@ -2,7 +2,7 @@ function ttc(){
             method = $('.nav-item.active.method').text();
             area = $(".area.option-list a.on").text();
             subway = $(".subway.option-list a.on").text();
-            suboption = $('#line-sub-list a.on').text()
+            suboption = $('#line-sub-list a.on').text();
             zffs = $(".zffs.option-list a.on").text();
             jushi = $(".jushi.option-list a.on").text();
             filter = $(".filter.option-list a.on").text();
@@ -31,7 +31,19 @@ function ttc(){
                 $(e.target).addClass('on');
 
                 $("#table").bootstrapTable('destroy');
-                update_table(ttc())
+                update_table(ttc());
+                
+                var myGeo = new BMap.Geocoder();
+                if ($(".area.option-list a.on").text() != '不限') {
+                    txt = $(".area.option-list a.on").text() + '区' + $('#line-sub-list a.on').text()
+                } else {
+                    txt = $('#line-sub-list a.on').text() + '地铁站'
+                }
+                myGeo.getPoint(txt, function(point){
+                          if (point) {      
+                              index_map.centerAndZoom(point, 16);           
+                          }      
+                      }, "北京市");
             });
         }
 
@@ -177,6 +189,14 @@ function ttc(){
                 $("#table").bootstrapTable('destroy');
                 update_table(parameters)
 
+                var myGeo = new BMap.Geocoder();      
+                myGeo.getPoint($("#searchipt").val(), function(point){      
+                          if (point) {      
+                              index_map.centerAndZoom(point, 16);           
+                          }      
+                      }, "北京市");
+
+
             });
 
 
@@ -220,6 +240,8 @@ function ttc(){
                 get_sub_options('area', e.target.innerHTML)
                 $("#table").bootstrapTable('destroy');
                 update_table(ttc())
+
+
             });
 
             $(".subway.option-list a").click(function(e) {
@@ -278,18 +300,15 @@ function ttc(){
 
 
 
-function AddMap(){
-        //设置地图容器高度
-        var screenH = window.innerHeight / 2;
-        var headerH = this.elById("map_show").offsetHeight;
-        this.elById("map_show").style.height = screenH-headerH+"px";
+function AddMap(my_id, height){
+        this.elById(my_id).style.height = height+"px";
     }
 
     /**
      * @param el 地图初始化容器
      * @param p  初始化坐标点
      */
-    AddMap.prototype.init=function(el,p){
+    AddMap.prototype.init=function(el,p,level){
         var point={
             lng:116.405706,
             lat:39.91582
@@ -303,7 +322,7 @@ function AddMap(){
 
         this.m.enableContinuousZoom();    //启用地图惯性拖拽
         this.m.enableScrollWheelZoom();   //启用滚轮放大缩小
-        this.m.centerAndZoom(this.p, 12);  //设置地图显示中间点、地图显示级别
+        this.m.centerAndZoom(this.p, level);  //设置地图显示中间点、地图显示级别
 
         this.search();               //搜索
         return this.m
@@ -349,7 +368,7 @@ function AddMap(){
     //定位到具体位置
     AddMap.prototype.setPlace=function(m){
         var _this=this;
-        //m.clearOverlays();    //清除地图上所有覆盖物
+
         function myFun(){
             var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
             m.centerAndZoom(pp, 15);  //设置地图显示中间点、地图显示级别

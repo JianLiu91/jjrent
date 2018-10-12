@@ -130,10 +130,14 @@
 
 					<div class='addinfo'>
 			  			<div class="bd" id="filter-options">
-								<div class="sub-option-list" id="line-sub-list" style="display: none; width:100%">
-			               		</div>
+			  				<div class="row" style="margin-right:0; margin-left:0;display:">
+								<div class="sub-option-list row" id="line-sub-list" style="display: none; width:100%">
+		               			</div>
+		               		</div>
 
-				            <dl class="dl-lst clear">
+		               		<div class="row">
+							  <div class="col-5" id="left_part">
+							  	<dl class="dl-lst clear">
 
 				            	<dt>来源：</dt>
 				                <dd data-index="0">
@@ -172,6 +176,14 @@
 				                        <span class="badge badge-light" style="font-size: 11px">(建议开启)</span>
 				                    </div>
 				                </dd>
+				                <dd><br /><br /><br /><br /></dd>
+							  </div>
+							  <div class="col-7">
+							  	{% include 'map_index.html' %}
+							  </div>
+							</div>
+
+				            
 
 				            </dl>
 				        </div>
